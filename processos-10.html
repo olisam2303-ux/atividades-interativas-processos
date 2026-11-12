@@ -326,7 +326,7 @@ section.tab{display:flex;flex-direction:column;gap:16px}
 
   <nav class="tabs" role="tablist" aria-label="Partes da atividade">
     <button role="tab" data-tab="como" id="t-como" aria-selected="true">Como fazer</button>
-    <button role="tab" data-tab="diagrama" id="t-diagrama" aria-selected="false">Diagrama</button>
+    <button role="tab" data-tab="fluxograma" id="t-fluxograma" aria-selected="false">Fluxograma</button>
     <button role="tab" data-tab="relatorio-tab" id="t-relatorio-tab" aria-selected="false">Relatório</button>
   </nav>
 
@@ -344,28 +344,85 @@ section.tab{display:flex;flex-direction:column;gap:16px}
     </ul>
   </section>
 
-    </section>
-<section class="tab" id="diagrama" role="tabpanel" hidden>
-  <div class="sec-head"><span class="n">DIAGRAMA</span><h2>Cultura ágil e mudança de mentalidade</h2></div>
+    <section>
+  <div class="sec-head"><span class="n">ENTENDA</span><h2>Cultura ágil e mudança de mentalidade</h2></div>
   <p class="lead">Use o diagrama como mapa da atividade: ele mostra a estrutura que as respostas do grupo precisam seguir.</p>
-  <div class="visual claro"><svg viewBox="0 0 600 180" role="img" aria-label="Comparação entre a abordagem de contrato rígido e a abordagem de colaboração ágil diante do mesmo pedido do cliente">
+  <div class="visual claro"><svg viewBox="0 0 600 160" role="img" aria-label="Comparação entre a abordagem de contrato rígido e a abordagem de colaboração ágil diante do mesmo pedido do cliente">
 <style>.p10t{font:700 13px sans-serif;fill:#fff;text-anchor:middle}.p10i{font:11.5px sans-serif;text-anchor:middle}</style>
 <rect x="10" y="5" width="280" height="30" rx="8" fill="#c9333a"></rect><text class="p10t" x="150" y="26">Contrato rígido</text>
-<rect x="10" y="40" width="280" height="130" rx="8" fill="#fdecec" stroke="#c9333a" stroke-width="1.5"></rect>
+<rect x="10" y="40" width="280" height="110" rx="8" fill="#fdecec" stroke="#c9333a" stroke-width="1.5"></rect>
 <text class="p10i" x="150" y="64" fill="#8f2229">"não está no contrato"</text>
 <text class="p10i" x="150" y="86" fill="#8f2229">precisa de aditivo formal</text>
 <text class="p10i" x="150" y="108" fill="#8f2229">reavalia custo e prazo antes de tudo</text>
-<text class="p10i" x="150" y="130" fill="#8f2229">cliente e equipe viram "lados opostos"</text>
-<text class="p10i" x="150" y="152" fill="#8f2229">tensão sobe, confiança cai</text>
 <rect x="310" y="5" width="280" height="30" rx="8" fill="#1b8a5a"></rect><text class="p10t" x="450" y="26">Colaboração ágil</text>
-<rect x="310" y="40" width="280" height="130" rx="8" fill="#e6f6ee" stroke="#1b8a5a" stroke-width="1.5"></rect>
+<rect x="310" y="40" width="280" height="110" rx="8" fill="#e6f6ee" stroke="#1b8a5a" stroke-width="1.5"></rect>
 <text class="p10i" x="450" y="64" fill="#0f5e3f">"boa ideia, vamos ver como"</text>
 <text class="p10i" x="450" y="86" fill="#0f5e3f">transparência sobre o estado do projeto</text>
 <text class="p10i" x="450" y="108" fill="#0f5e3f">propõe uma troca de esforço parecido</text>
-<text class="p10i" x="450" y="130" fill="#0f5e3f">cliente e equipe do mesmo lado</text>
-<text class="p10i" x="450" y="152" fill="#0f5e3f">confiança cresce, mesmo com pedido novo</text>
 </svg>
-<p class="cap">Mesmo pedido do cliente (rastreamento em tempo real), duas reações completamente diferentes — é isso que os rascunhos das Partes 1 e 2 precisam mostrar.</p></div>
+<p class="cap">Mesmo pedido do cliente (rastreamento em tempo real), duas formas diferentes de responder — a Análise de impacto (sentimento, clima, estresse) de cada uma é o que o grupo escreve nas Partes 1 e 2.</p></div>
+</section>
+    </section>
+<section class="tab" id="fluxograma" role="tabpanel" hidden>
+  <div class="sec-head"><span class="n">FLUXOGRAMA</span><h2>Comparando as duas abordagens</h2></div>
+  <p class="lead">O fluxograma mostra a ordem da atividade: o mesmo pedido do cliente passa pelas duas abordagens, uma de cada vez, antes das perguntas de consolidação.</p>
+  <div class="visual">
+    <svg viewBox="0 0 640 456" class="sv" role="img" aria-label="Fluxograma da comparação: início; ler o pedido do cliente sobre rastreamento em tempo real; pegar a próxima abordagem, das duas no total; escrever o rascunho da parte 1 ou 2; analisar o impacto, sentimento, clima e nível de estresse; se faltar abordagem, voltar e pegar a próxima; quando não faltar nenhuma, responder as perguntas de consolidação; fim">
+      <defs>
+        <marker id="fp10-head" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+          <path d="M0,0 L9,4.5 L0,9 z" class="sv-headfill"/>
+        </marker>
+      </defs>
+      <rect x="100" y="8" width="200" height="32" rx="16" class="sv-box-ok"/>
+      <text x="200" y="29" class="sv-label sv-small">INÍCIO</text>
+      <path d="M200 40 L200 54" class="sv-arrow" marker-end="url(#fp10-head)"/>
+
+      <rect x="60" y="54" width="280" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="73" class="sv-label sv-small">Ler o pedido do cliente</text>
+      <text x="200" y="90" class="sv-label sv-small">(rastreamento em tempo real)</text>
+      <path d="M200 100 L200 114" class="sv-arrow" marker-end="url(#fp10-head)"/>
+
+      <rect x="60" y="114" width="280" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="133" class="sv-label sv-small">Pegar a próxima abordagem</text>
+      <text x="200" y="150" class="sv-label sv-small">(2 no total)</text>
+      <path d="M200 160 L200 174" class="sv-arrow" marker-end="url(#fp10-head)"/>
+
+      <rect x="60" y="174" width="280" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="193" class="sv-label sv-small">Escrever o rascunho</text>
+      <text x="200" y="210" class="sv-label sv-small">(Parte 1 ou 2)</text>
+      <path d="M200 220 L200 234" class="sv-arrow" marker-end="url(#fp10-head)"/>
+
+      <rect x="60" y="234" width="280" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="253" class="sv-label sv-small">Analisar o impacto: sentimento,</text>
+      <text x="200" y="270" class="sv-label sv-small">clima e nível de estresse</text>
+      <path d="M200 280 L200 294" class="sv-arrow" marker-end="url(#fp10-head)"/>
+
+      <polygon points="200,294 300,316 200,338 100,316" class="sv-diamond"/>
+      <text x="200" y="321" class="sv-label sv-small">Falta abordagem?</text>
+      <path d="M100 316 L24 316 L24 114 L196 114" class="sv-arrow sv-arrow-soft" marker-end="url(#fp10-head)"/>
+      <text x="40" y="308" class="sv-tag sv-ok">V</text>
+      <path d="M200 338 L200 354" class="sv-arrow" marker-end="url(#fp10-head)"/>
+      <text x="210" y="350" class="sv-tag sv-no">F</text>
+
+      <rect x="60" y="354" width="280" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="373" class="sv-label sv-small">Responder as perguntas</text>
+      <text x="200" y="390" class="sv-label sv-small">de consolidação (Parte 3)</text>
+      <path d="M200 400 L200 414" class="sv-arrow" marker-end="url(#fp10-head)"/>
+
+      <rect x="100" y="414" width="200" height="32" rx="16" class="sv-box-ok"/>
+      <text x="200" y="435" class="sv-label sv-small">FIM</text>
+    </svg>
+    <div class="cap">As duas voltas do laço usam o mesmo pedido do cliente — o que muda é a mentalidade aplicada em cada uma.</div>
+  </div>
+  <div class="comoBox">
+    <h3 style="margin-top:0">Como ler o fluxograma</h3>
+    <ol class="comoList">
+      <li><span class="num">1</span><span>O laço passa pelas duas abordagens: primeiro o contrato rígido (Parte 1), depois a colaboração ágil (Parte 2).</span></li>
+      <li><span class="num">2</span><span>Cada abordagem tem seu próprio rascunho e sua própria análise de impacto — não são compartilhados.</span></li>
+      <li><span class="num">3</span><span>A Análise de impacto (sentimento, clima, estresse) é a conclusão do grupo sobre cada rascunho — não está pronta em nenhum lugar.</span></li>
+      <li><span class="num">4</span><span>As perguntas de consolidação (Parte 3) comparam as duas abordagens, depois que ambas estão prontas.</span></li>
+    </ol>
+  </div>
 </section>
 <section class="tab" id="relatorio-tab" role="tabpanel" hidden>
   <section>

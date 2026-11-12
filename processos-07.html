@@ -326,7 +326,7 @@ section.tab{display:flex;flex-direction:column;gap:16px}
 
   <nav class="tabs" role="tablist" aria-label="Partes da atividade">
     <button role="tab" data-tab="como" id="t-como" aria-selected="true">Como fazer</button>
-    <button role="tab" data-tab="diagrama" id="t-diagrama" aria-selected="false">Diagrama</button>
+    <button role="tab" data-tab="fluxograma" id="t-fluxograma" aria-selected="false">Fluxograma</button>
     <button role="tab" data-tab="relatorio-tab" id="t-relatorio-tab" aria-selected="false">Relatório</button>
   </nav>
 
@@ -343,9 +343,8 @@ section.tab{display:flex;flex-direction:column;gap:16px}
     </ul>
   </section>
 
-    </section>
-<section class="tab" id="diagrama" role="tabpanel" hidden>
-  <div class="sec-head"><span class="n">DIAGRAMA</span><h2>Gerenciamento de mudanças em requisitos</h2></div>
+    <section>
+  <div class="sec-head"><span class="n">ENTENDA</span><h2>Gerenciamento de mudanças em requisitos</h2></div>
   <p class="lead">Use o diagrama como mapa da atividade: ele mostra a estrutura que as respostas do grupo precisam seguir.</p>
   <div class="visual claro"><svg viewBox="0 0 600 110" role="img" aria-label="Etapas do Processo de Controle de Mudanças: solicitação, avaliação de impacto, aprovação, implementação e rastreamento">
 <defs><marker id="p7a" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#0e8074"></path></marker></defs>
@@ -357,7 +356,69 @@ section.tab{display:flex;flex-direction:column;gap:16px}
 <rect class="p7b" x="501" y="20" width="94" height="50" rx="9"></rect><text class="p7t" x="548" y="49">Rastreamento</text>
 <path class="p7l" d="M109,45 L127,45"></path><path class="p7l" d="M233,45 L251,45"></path><path class="p7l" d="M357,45 L375,45"></path><path class="p7l" d="M481,45 L499,45"></path>
 </svg>
-<p class="cap">Essas 5 etapas viram colunas na planilha do grupo. As duas solicitações desta atividade ainda estão só na 1ª/2ª etapa — por isso o status delas deve ser "Pendente" ou "Em avaliação", nunca "Aprovada".</p></div>
+<p class="cap">Essas 5 etapas viram colunas na planilha do grupo. Em qual etapa cada solicitação está agora é algo que o grupo decide ao avaliar o pedido.</p></div>
+</section>
+    </section>
+<section class="tab" id="fluxograma" role="tabpanel" hidden>
+  <div class="sec-head"><span class="n">FLUXOGRAMA</span><h2>A estrutura da planilha de mudanças</h2></div>
+  <p class="lead">O fluxograma mostra a estrutura da resposta: a planilha é montada uma vez, e depois cada solicitação passa pelo mesmo laço de classificação e avaliação.</p>
+  <div class="visual">
+    <svg viewBox="0 0 640 454" class="sv" role="img" aria-label="Fluxograma do registro de controle de mudanças: início; estrutura da planilha com as etapas do PCM; pegar a próxima solicitação, das duas no total; classificar tipo de mudança e urgência; avaliar impacto na tríplice restrição; definir status atual; se faltar solicitação, voltar e pegar a próxima; quando não faltar nenhuma, fim">
+      <defs>
+        <marker id="fp07-head" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+          <path d="M0,0 L9,4.5 L0,9 z" class="sv-headfill"/>
+        </marker>
+      </defs>
+      <rect x="100" y="8" width="200" height="32" rx="16" class="sv-box-ok"/>
+      <text x="200" y="29" class="sv-label sv-small">INÍCIO</text>
+      <path d="M200 40 L200 54" class="sv-arrow" marker-end="url(#fp07-head)"/>
+
+      <rect x="60" y="54" width="280" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="73" class="sv-label sv-small">Estrutura da planilha: colunas pelas</text>
+      <text x="200" y="90" class="sv-label sv-small">etapas do PCM (Passo 1)</text>
+      <path d="M200 100 L200 114" class="sv-arrow" marker-end="url(#fp07-head)"/>
+
+      <rect x="60" y="114" width="280" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="133" class="sv-label sv-small">Pegar a próxima solicitação</text>
+      <text x="200" y="150" class="sv-label sv-small">(2 no total)</text>
+      <path d="M200 160 L200 174" class="sv-arrow" marker-end="url(#fp07-head)"/>
+
+      <rect x="60" y="174" width="280" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="193" class="sv-label sv-small">Classificar tipo de mudança</text>
+      <text x="200" y="210" class="sv-label sv-small">e urgência (Passo 2/3)</text>
+      <path d="M200 220 L200 234" class="sv-arrow" marker-end="url(#fp07-head)"/>
+
+      <rect x="60" y="234" width="280" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="253" class="sv-label sv-small">Avaliar impacto (Tríplice Restrição:</text>
+      <text x="200" y="270" class="sv-label sv-small">escopo, tempo, custo)</text>
+      <path d="M200 280 L200 294" class="sv-arrow" marker-end="url(#fp07-head)"/>
+
+      <rect x="60" y="294" width="280" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="313" class="sv-label sv-small">Definir status atual</text>
+      <text x="200" y="330" class="sv-label sv-small">(Passo 2/3)</text>
+      <path d="M200 340 L200 354" class="sv-arrow" marker-end="url(#fp07-head)"/>
+
+      <polygon points="200,354 300,376 200,398 100,376" class="sv-diamond"/>
+      <text x="200" y="381" class="sv-label sv-small">Falta solicitação?</text>
+      <path d="M100 376 L24 376 L24 114 L196 114" class="sv-arrow sv-arrow-soft" marker-end="url(#fp07-head)"/>
+      <text x="40" y="368" class="sv-tag sv-ok">V</text>
+      <path d="M200 398 L200 412" class="sv-arrow" marker-end="url(#fp07-head)"/>
+      <text x="210" y="408" class="sv-tag sv-no">F</text>
+
+      <rect x="100" y="412" width="200" height="32" rx="16" class="sv-box-ok"/>
+      <text x="200" y="433" class="sv-label sv-small">FIM</text>
+    </svg>
+    <div class="cap">O laço se repete para cada solicitação que chegou — a estrutura da planilha (Passo 1) é feita uma única vez, antes dele.</div>
+  </div>
+  <div class="comoBox">
+    <h3 style="margin-top:0">Como ler o fluxograma</h3>
+    <ol class="comoList">
+      <li><span class="num">1</span><span>O laço se repete duas vezes: uma para a solicitação do Tio Carlos, outra para a da Prima Joana.</span></li>
+      <li><span class="num">2</span><span>Tipo, urgência e impacto são diferentes em cada solicitação — leiam o pedido de cada pessoa com atenção antes de classificar.</span></li>
+      <li><span class="num">3</span><span>"Status atual" é sobre em que etapa do PCM a solicitação está agora, não sobre se ela é uma boa ideia.</span></li>
+      <li><span class="num">4</span><span>A estrutura da planilha (Passo 1) é feita uma única vez, antes do laço, e vale para as duas solicitações.</span></li>
+    </ol>
+  </div>
 </section>
 <section class="tab" id="relatorio-tab" role="tabpanel" hidden>
   <section>

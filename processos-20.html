@@ -326,7 +326,7 @@ section.tab{display:flex;flex-direction:column;gap:16px}
 
   <nav class="tabs" role="tablist" aria-label="Partes da atividade">
     <button role="tab" data-tab="como" id="t-como" aria-selected="true">Como fazer</button>
-    <button role="tab" data-tab="diagrama" id="t-diagrama" aria-selected="false">Diagrama</button>
+    <button role="tab" data-tab="fluxograma" id="t-fluxograma" aria-selected="false">Fluxograma</button>
     <button role="tab" data-tab="relatorio-tab" id="t-relatorio-tab" aria-selected="false">Relatório</button>
   </nav>
 
@@ -344,9 +344,8 @@ section.tab{display:flex;flex-direction:column;gap:16px}
     </ul>
   </section>
 
-    </section>
-<section class="tab" id="diagrama" role="tabpanel" hidden>
-  <div class="sec-head"><span class="n">DIAGRAMA</span><h2>Integração Contínua (CI) e Entrega Contínua (CD)</h2></div>
+    <section>
+  <div class="sec-head"><span class="n">ENTENDA</span><h2>Integração Contínua (CI) e Entrega Contínua (CD)</h2></div>
   <p class="lead">Use o diagrama como mapa da atividade: ele mostra a estrutura que as respostas do grupo precisam seguir.</p>
   <div class="visual claro"><svg viewBox="0 0 600 90" role="img" aria-label="Fluxo típico de um pipeline de CI/CD: um evento como push dispara o workflow, que roda num runner, executa passos (checkout, instalar, testar) e termina em sucesso ou falha"><defs><marker id="p20a" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#0e8074"></path></marker></defs>
 <style>.p20b{fill:#e8f2f0;stroke:#0e8074;stroke-width:2}.p20t{font:700 11px sans-serif;fill:#17231f;text-anchor:middle}.p20l{stroke:#0e8074;stroke-width:2;fill:none;marker-end:url(#p20a)}</style>
@@ -361,6 +360,56 @@ section.tab{display:flex;flex-direction:column;gap:16px}
 <text x="270" y="20" font-size="9.5" fill="#59736c" text-anchor="middle">checkout, instalar, testar...</text>
 </svg>
 <p class="cap">Todo workflow segue essa forma geral — usem o arquivo apresentado na aula pra preencher cada caixa com o valor real dele.</p></div>
+</section>
+    </section>
+<section class="tab" id="fluxograma" role="tabpanel" hidden>
+  <div class="sec-head"><span class="n">FLUXOGRAMA</span><h2>Traduzindo o workflow</h2></div>
+  <p class="lead">O fluxograma mostra a ordem da atividade: ler o arquivo real, explicar com as próprias palavras e analisar o efeito de uma falha.</p>
+  <div class="visual">
+    <svg viewBox="0 0 640 336" class="sv" role="img" aria-label="Fluxograma da leitura do workflow: início; ler o workflow, evento, nome, runner e ações; explicar o pipeline com as próprias palavras; analisar o efeito de uma falha de teste; justificar rodar a CI a cada push; fim">
+      <defs>
+        <marker id="fp20-head" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+          <path d="M0,0 L9,4.5 L0,9 z" class="sv-headfill"/>
+        </marker>
+      </defs>
+      <rect x="100" y="8" width="200" height="32" rx="16" class="sv-box-ok"/>
+      <text x="200" y="29" class="sv-label sv-small">INÍCIO</text>
+      <path d="M200 40 L200 54" class="sv-arrow" marker-end="url(#fp20-head)"/>
+
+      <rect x="60" y="54" width="280" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="73" class="sv-label sv-small">Ler o workflow: evento, nome,</text>
+      <text x="200" y="90" class="sv-label sv-small">runner e ações (Passo 1)</text>
+      <path d="M200 100 L200 114" class="sv-arrow" marker-end="url(#fp20-head)"/>
+
+      <rect x="60" y="114" width="280" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="133" class="sv-label sv-small">Explicar o pipeline com as</text>
+      <text x="200" y="150" class="sv-label sv-small">próprias palavras (Passo 2)</text>
+      <path d="M200 160 L200 174" class="sv-arrow" marker-end="url(#fp20-head)"/>
+
+      <rect x="60" y="174" width="280" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="193" class="sv-label sv-small">Analisar o efeito de uma falha</text>
+      <text x="200" y="210" class="sv-label sv-small">de teste (Passo 3)</text>
+      <path d="M200 220 L200 234" class="sv-arrow" marker-end="url(#fp20-head)"/>
+
+      <rect x="60" y="234" width="280" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="253" class="sv-label sv-small">Justificar rodar a CI a cada</text>
+      <text x="200" y="270" class="sv-label sv-small">push</text>
+      <path d="M200 280 L200 294" class="sv-arrow" marker-end="url(#fp20-head)"/>
+
+      <rect x="100" y="294" width="200" height="32" rx="16" class="sv-box-ok"/>
+      <text x="200" y="315" class="sv-label sv-small">FIM</text>
+    </svg>
+    <div class="cap">Os 5 campos do Passo 1 vêm do arquivo real apresentado na aula — o diagrama acima é só o molde.</div>
+  </div>
+  <div class="comoBox">
+    <h3 style="margin-top:0">Como ler o fluxograma</h3>
+    <ol class="comoList">
+      <li><span class="num">1</span><span>Os 5 campos do Passo 1 vêm do arquivo real apresentado na aula — o diagrama é só o molde, o conteúdo é do arquivo verdadeiro.</span></li>
+      <li><span class="num">2</span><span>A explicação (Passo 2) segue a ordem do pipeline: gatilho → passos → resultado, do jeito que o grupo entendeu.</span></li>
+      <li><span class="num">3</span><span>"O que aconteceria se um teste falhasse" é sobre o fluxo do diagrama (Passos → ✗ Falha), não sobre inventar um comportamento novo.</span></li>
+      <li><span class="num">4</span><span>A vantagem de rodar a cada push é sobre velocidade de feedback — comparem com só testar no fim do projeto.</span></li>
+    </ol>
+  </div>
 </section>
 <section class="tab" id="relatorio-tab" role="tabpanel" hidden>
   <section>

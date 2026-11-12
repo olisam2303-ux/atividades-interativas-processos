@@ -326,7 +326,7 @@ section.tab{display:flex;flex-direction:column;gap:16px}
 
   <nav class="tabs" role="tablist" aria-label="Partes da atividade">
     <button role="tab" data-tab="como" id="t-como" aria-selected="true">Como fazer</button>
-    <button role="tab" data-tab="diagrama" id="t-diagrama" aria-selected="false">Diagrama</button>
+    <button role="tab" data-tab="fluxograma" id="t-fluxograma" aria-selected="false">Fluxograma</button>
     <button role="tab" data-tab="relatorio-tab" id="t-relatorio-tab" aria-selected="false">Relatório</button>
   </nav>
 
@@ -344,9 +344,8 @@ section.tab{display:flex;flex-direction:column;gap:16px}
     </ul>
   </section>
 
-    </section>
-<section class="tab" id="diagrama" role="tabpanel" hidden>
-  <div class="sec-head"><span class="n">DIAGRAMA</span><h2>Estimativas ágeis: story points, velocity e release plan</h2></div>
+    <section>
+  <div class="sec-head"><span class="n">ENTENDA</span><h2>Estimativas ágeis: story points, velocity e release plan</h2></div>
   <p class="lead">Use o diagrama como mapa da atividade: ele mostra a estrutura que as respostas do grupo precisam seguir.</p>
   <div class="visual claro"><svg viewBox="0 0 460 70" role="img" aria-label="Escala de tamanho de camiseta mapeada para story points: XS igual a 1, S igual a 2, M igual a 3, L igual a 5, XL igual a 8 ou 13, sempre comparando com a tarefa âncora"><style>.p19t{font:700 13px sans-serif;fill:#fff;text-anchor:middle}.p19n{font:10px sans-serif;fill:#fff;text-anchor:middle}</style>
 <rect x="5" y="5" width="70" height="34" rx="7" fill="#8fc9be"></rect><text class="p19t" x="40" y="27" fill="#17231f">XS</text><text class="p19n" x="40" y="55" fill="#59736c">1 pt</text>
@@ -356,6 +355,73 @@ section.tab{display:flex;flex-direction:column;gap:16px}
 <rect x="325" y="5" width="130" height="34" rx="7" fill="#083f38"></rect><text class="p19t" x="390" y="27">XL</text><text class="p19n" x="390" y="55" fill="#59736c">8 ou 13 pt</text>
 </svg>
 <p class="cap">A âncora costuma ser XS (1 ponto). Toda outra tarefa é comparada com ela: "isso é mais fácil, parecido ou bem mais difícil que a âncora?"</p></div>
+</section>
+    </section>
+<section class="tab" id="fluxograma" role="tabpanel" hidden>
+  <div class="sec-head"><span class="n">FLUXOGRAMA</span><h2>Estimando o backlog</h2></div>
+  <p class="lead">O fluxograma mostra a ordem da atividade: escolher a âncora, um laço que estima cada tarefa comparando com ela, e por fim a análise.</p>
+  <div class="visual">
+    <svg viewBox="0 0 640 514" class="sv" role="img" aria-label="Fluxograma da estimativa: início; escolher a tarefa âncora, a mais simples; pegar a próxima tarefa, das cinco no total; comparar com a âncora e definir o tamanho de camiseta; converter para story points em fibonacci; se faltar tarefa, voltar e pegar a próxima; identificar a tarefa de maior incerteza; calcular quantas sprints dada a velocity; fim">
+      <defs>
+        <marker id="fp19-head" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+          <path d="M0,0 L9,4.5 L0,9 z" class="sv-headfill"/>
+        </marker>
+      </defs>
+      <rect x="100" y="8" width="200" height="32" rx="16" class="sv-box-ok"/>
+      <text x="200" y="29" class="sv-label sv-small">INÍCIO</text>
+      <path d="M200 40 L200 54" class="sv-arrow" marker-end="url(#fp19-head)"/>
+
+      <rect x="60" y="54" width="280" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="73" class="sv-label sv-small">Escolher a tarefa âncora</text>
+      <text x="200" y="90" class="sv-label sv-small">(a mais simples) — Passo 1</text>
+      <path d="M200 100 L200 114" class="sv-arrow" marker-end="url(#fp19-head)"/>
+
+      <rect x="60" y="114" width="280" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="133" class="sv-label sv-small">Pegar a próxima tarefa</text>
+      <text x="200" y="150" class="sv-label sv-small">(5 no total)</text>
+      <path d="M200 160 L200 174" class="sv-arrow" marker-end="url(#fp19-head)"/>
+
+      <rect x="60" y="174" width="280" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="193" class="sv-label sv-small">Comparar com a âncora:</text>
+      <text x="200" y="210" class="sv-label sv-small">tamanho de camiseta</text>
+      <path d="M200 220 L200 234" class="sv-arrow" marker-end="url(#fp19-head)"/>
+
+      <rect x="60" y="234" width="280" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="253" class="sv-label sv-small">Converter para story points</text>
+      <text x="200" y="270" class="sv-label sv-small">(Fibonacci) — Passo 2</text>
+      <path d="M200 280 L200 294" class="sv-arrow" marker-end="url(#fp19-head)"/>
+
+      <polygon points="200,294 300,316 200,338 100,316" class="sv-diamond"/>
+      <text x="200" y="321" class="sv-label sv-small">Falta tarefa?</text>
+      <path d="M100 316 L24 316 L24 114 L196 114" class="sv-arrow sv-arrow-soft" marker-end="url(#fp19-head)"/>
+      <text x="40" y="308" class="sv-tag sv-ok">V</text>
+      <path d="M200 338 L200 352" class="sv-arrow" marker-end="url(#fp19-head)"/>
+      <text x="210" y="348" class="sv-tag sv-no">F</text>
+
+      <rect x="60" y="352" width="280" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="371" class="sv-label sv-small">Identificar a tarefa de maior</text>
+      <text x="200" y="388" class="sv-label sv-small">incerteza (Passo 3)</text>
+      <path d="M200 398 L200 412" class="sv-arrow" marker-end="url(#fp19-head)"/>
+
+      <rect x="60" y="412" width="280" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="431" class="sv-label sv-small">Calcular quantas sprints,</text>
+      <text x="200" y="448" class="sv-label sv-small">dada a velocity</text>
+      <path d="M200 458 L200 472" class="sv-arrow" marker-end="url(#fp19-head)"/>
+
+      <rect x="100" y="472" width="200" height="32" rx="16" class="sv-box-ok"/>
+      <text x="200" y="493" class="sv-label sv-small">FIM</text>
+    </svg>
+    <div class="cap">O laço se repete 5 vezes — uma por tarefa da lista, sempre comparando com a âncora escolhida no Passo 1.</div>
+  </div>
+  <div class="comoBox">
+    <h3 style="margin-top:0">Como ler o fluxograma</h3>
+    <ol class="comoList">
+      <li><span class="num">1</span><span>O laço se repete 5 vezes — uma por tarefa, sempre comparando com a âncora escolhida no Passo 1.</span></li>
+      <li><span class="num">2</span><span>Tamanho de camiseta vem antes de story points — a conversão (XS=1, S=2...) é só o último passo, não o julgamento em si.</span></li>
+      <li><span class="num">3</span><span>"Maior incerteza" não é necessariamente a tarefa com mais pontos — incerteza e tamanho são coisas diferentes.</span></li>
+      <li><span class="num">4</span><span>Para calcular as sprints, somem os story points das 5 tarefas e dividam pela velocity, arredondando para cima.</span></li>
+    </ol>
+  </div>
 </section>
 <section class="tab" id="relatorio-tab" role="tabpanel" hidden>
   <section>

@@ -326,7 +326,7 @@ section.tab{display:flex;flex-direction:column;gap:16px}
 
   <nav class="tabs" role="tablist" aria-label="Partes da atividade">
     <button role="tab" data-tab="como" id="t-como" aria-selected="true">Como fazer</button>
-    <button role="tab" data-tab="diagrama" id="t-diagrama" aria-selected="false">Diagrama</button>
+    <button role="tab" data-tab="fluxograma" id="t-fluxograma" aria-selected="false">Fluxograma</button>
     <button role="tab" data-tab="relatorio-tab" id="t-relatorio-tab" aria-selected="false">Relatório</button>
   </nav>
 
@@ -344,11 +344,10 @@ section.tab{display:flex;flex-direction:column;gap:16px}
     </ul>
   </section>
 
-    </section>
-<section class="tab" id="diagrama" role="tabpanel" hidden>
-  <div class="sec-head"><span class="n">DIAGRAMA</span><h2>Validação e verificação de requisitos</h2></div>
+    <section>
+  <div class="sec-head"><span class="n">ENTENDA</span><h2>Validação e verificação de requisitos</h2></div>
   <p class="lead">Use o diagrama como mapa da atividade: ele mostra a estrutura que as respostas do grupo precisam seguir.</p>
-  <div class="visual claro"><svg viewBox="0 0 600 200" role="img" aria-label="Os cinco critérios SMART e um exemplo transformando o requisito vago relatório bonito e rápido em um requisito SMART">
+  <div class="visual claro"><svg viewBox="0 0 600 200" role="img" aria-label="Os cinco critérios SMART e um exemplo transformando o requisito vago app precisa ser seguro e fácil de usar em um requisito SMART">
 <style>.p6t{font:700 15px sans-serif;fill:#fff;text-anchor:middle}.p6d{font:10.5px sans-serif;fill:#59736c;text-anchor:middle}.p6ex{font:11.5px sans-serif}</style>
 <rect x="5" y="5" width="108" height="34" rx="8" fill="#0e8074"></rect><text class="p6t" x="59" y="28">S</text>
 <rect x="121" y="5" width="108" height="34" rx="8" fill="#0e8074"></rect><text class="p6t" x="175" y="28">M</text>
@@ -358,16 +357,82 @@ section.tab{display:flex;flex-direction:column;gap:16px}
 <text class="p6d" x="59" y="52">específico</text><text class="p6d" x="175" y="52">mensurável</text><text class="p6d" x="291" y="52">atingível</text><text class="p6d" x="407" y="52">relevante</text><text class="p6d" x="532" y="52">temporal</text>
 <rect x="10" y="72" width="270" height="60" rx="8" fill="#fdecec" stroke="#c9333a" stroke-width="1.5"></rect>
 <text class="p6ex" x="145" y="96" text-anchor="middle" fill="#8f2229" font-weight="700">Vago</text>
-<text class="p6ex" x="145" y="116" text-anchor="middle" fill="#8f2229">"relatório bonito e rápido"</text>
+<text class="p6ex" x="145" y="116" text-anchor="middle" fill="#8f2229">"app precisa ser seguro e fácil de usar"</text>
 <rect x="320" y="72" width="270" height="60" rx="8" fill="#e6f6ee" stroke="#1b8a5a" stroke-width="1.5"></rect>
 <text class="p6ex" x="455" y="90" text-anchor="middle" fill="#0f5e3f" font-weight="700">SMART</text>
-<text class="p6ex" x="455" y="106" text-anchor="middle" fill="#0f5e3f">"relatório de vendas por mês,</text>
-<text class="p6ex" x="455" y="121" text-anchor="middle" fill="#0f5e3f">carrega em até 3s, exportável até dia 30"</text>
+<text class="p6ex" x="455" y="106" text-anchor="middle" fill="#0f5e3f">"login exige senha de 8+ caracteres;</text>
+<text class="p6ex" x="455" y="121" text-anchor="middle" fill="#0f5e3f">cadastro com até 3 campos, até sexta"</text>
 <path d="M282,102 L316,102" stroke="#0e8074" stroke-width="2.5" fill="none" marker-end="url(#p6a)"></path>
 <defs><marker id="p6a" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#0e8074"></path></marker></defs>
 <text class="p6d" x="300" y="150">Nem todo requisito precisa citar as 5 letras — o importante é ficar testável e ter prazo.</text>
 </svg>
-<p class="cap">Cada requisito reescrito no Bloco 3 deve virar algo parecido com a caixa verde: com números, prazo e forma de verificar.</p></div>
+<p class="cap">Exemplo de propósito diferente do e-mail da PM. Cada requisito reescrito no Bloco 3 deve virar algo parecido com a caixa verde: com números, prazo e forma de verificar.</p></div>
+</section>
+</section>
+<section class="tab" id="fluxograma" role="tabpanel" hidden>
+  <div class="sec-head"><span class="n">FLUXOGRAMA</span><h2>A estrutura da resposta</h2></div>
+  <p class="lead">O fluxograma mostra a estrutura do e-mail de resposta: agradecer, perguntar o que está vago, e um laço que reescreve cada requisito em SMART. As perguntas e os requisitos reescritos são do grupo.</p>
+  <div class="visual">
+    <svg viewBox="0 0 640 502" class="sv" role="img" aria-label="Fluxograma da resposta ao e-mail: início; bloco 1, agradecer e resumir o entendido; bloco 2, perguntas de esclarecimento sobre o que é vago; pegar o próximo requisito, dos dois no total; reescrever com SMART e critério de aceite; se faltar requisito, voltar e pegar o próximo; quando não faltar nenhum, bloco 4, riscos, dependências e próximos passos; anexo opcional, antes e depois; fim">
+      <defs>
+        <marker id="fp06-head" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+          <path d="M0,0 L9,4.5 L0,9 z" class="sv-headfill"/>
+        </marker>
+      </defs>
+      <rect x="100" y="8" width="200" height="32" rx="16" class="sv-box-ok"/>
+      <text x="200" y="29" class="sv-label sv-small">INÍCIO</text>
+      <path d="M200 40 L200 54" class="sv-arrow" marker-end="url(#fp06-head)"/>
+
+      <rect x="60" y="54" width="280" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="73" class="sv-label sv-small">Bloco 1: agradecer e</text>
+      <text x="200" y="90" class="sv-label sv-small">resumir o entendido</text>
+      <path d="M200 100 L200 114" class="sv-arrow" marker-end="url(#fp06-head)"/>
+
+      <rect x="60" y="114" width="280" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="133" class="sv-label sv-small">Bloco 2: perguntas de</text>
+      <text x="200" y="150" class="sv-label sv-small">esclarecimento (o que é vago?)</text>
+      <path d="M200 160 L200 174" class="sv-arrow" marker-end="url(#fp06-head)"/>
+
+      <rect x="60" y="174" width="280" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="193" class="sv-label sv-small">Pegar o próximo requisito</text>
+      <text x="200" y="210" class="sv-label sv-small">(2 no total)</text>
+      <path d="M200 220 L200 234" class="sv-arrow" marker-end="url(#fp06-head)"/>
+
+      <rect x="60" y="234" width="280" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="253" class="sv-label sv-small">Reescrever com SMART +</text>
+      <text x="200" y="270" class="sv-label sv-small">critério de aceite (Bloco 3)</text>
+      <path d="M200 280 L200 294" class="sv-arrow" marker-end="url(#fp06-head)"/>
+
+      <polygon points="200,294 300,316 200,338 100,316" class="sv-diamond"/>
+      <text x="200" y="323" class="sv-label sv-small">Falta requisito?</text>
+      <path d="M100 316 L24 316 L24 174 L196 174" class="sv-arrow sv-arrow-soft" marker-end="url(#fp06-head)"/>
+      <text x="40" y="308" class="sv-tag sv-ok">V</text>
+      <path d="M200 338 L200 354" class="sv-arrow" marker-end="url(#fp06-head)"/>
+      <text x="210" y="350" class="sv-tag sv-no">F</text>
+
+      <rect x="60" y="354" width="280" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="373" class="sv-label sv-small">Bloco 4: riscos, dependências</text>
+      <text x="200" y="390" class="sv-label sv-small">e próximos passos</text>
+      <path d="M200 400 L200 414" class="sv-arrow" marker-end="url(#fp06-head)"/>
+
+      <rect x="60" y="414" width="280" height="32" rx="8" class="sv-box"/>
+      <text x="200" y="435" class="sv-label sv-small">Anexo opcional: antes × depois</text>
+      <path d="M200 446 L200 460" class="sv-arrow" marker-end="url(#fp06-head)"/>
+
+      <rect x="100" y="460" width="200" height="32" rx="16" class="sv-box-ok"/>
+      <text x="200" y="481" class="sv-label sv-small">FIM</text>
+    </svg>
+    <div class="cap">O exemplo da aba Como fazer usa um requisito de login, de propósito diferente do e-mail da PM — o molde (número + prazo + forma de verificar) é o mesmo, mas a reescrita dos dois requisitos do e-mail é do grupo.</div>
+  </div>
+  <div class="comoBox">
+    <h3 style="margin-top:0">Como ler o fluxograma</h3>
+    <ol class="comoList">
+      <li><span class="num">1</span><span>O Bloco 2 (perguntas) vem antes do Bloco 3 (reescrita) — é respondendo essas perguntas, na cabeça do grupo, que a versão SMART aparece.</span></li>
+      <li><span class="num">2</span><span>Cada volta do laço do Bloco 3 reescreve um requisito do e-mail da PM — o exemplo da aba Como fazer usa outro requisito, só para mostrar o formato.</span></li>
+      <li><span class="num">3</span><span>Todo requisito SMART tem as três partes do molde: um número, um prazo, e uma forma clara de verificar se foi cumprido.</span></li>
+      <li><span class="num">4</span><span>O anexo Antes × Depois é opcional, mas usa o mesmo par vago→SMART que o grupo já escreveu no Bloco 3 — não precisa inventar um novo.</span></li>
+    </ol>
+  </div>
 </section>
 <section class="tab" id="relatorio-tab" role="tabpanel" hidden>
   <section>

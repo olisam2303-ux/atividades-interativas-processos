@@ -326,7 +326,7 @@ section.tab{display:flex;flex-direction:column;gap:16px}
 
   <nav class="tabs" role="tablist" aria-label="Partes da atividade">
     <button role="tab" data-tab="como" id="t-como" aria-selected="true">Como fazer</button>
-    <button role="tab" data-tab="diagrama" id="t-diagrama" aria-selected="false">Diagrama</button>
+    <button role="tab" data-tab="fluxograma" id="t-fluxograma" aria-selected="false">Fluxograma</button>
     <button role="tab" data-tab="relatorio-tab" id="t-relatorio-tab" aria-selected="false">Relatório</button>
   </nav>
 
@@ -344,9 +344,8 @@ section.tab{display:flex;flex-direction:column;gap:16px}
     </ul>
   </section>
 
-    </section>
-<section class="tab" id="diagrama" role="tabpanel" hidden>
-  <div class="sec-head"><span class="n">DIAGRAMA</span><h2>Requisitos: o ciclo de um requisito</h2></div>
+    <section>
+  <div class="sec-head"><span class="n">ENTENDA</span><h2>Requisitos: o ciclo de um requisito</h2></div>
   <p class="lead">Use o diagrama como mapa da atividade: ele mostra a estrutura que as respostas do grupo precisam seguir.</p>
   <div class="visual claro"><svg viewBox="0 0 620 280" role="img" aria-label="Diagrama do ciclo de um requisito: identificação, elicitação, documentação e validação em ciclo, com retorno à documentação quando o requisito não atende aos critérios">
 <defs>
@@ -379,6 +378,89 @@ section.tab{display:flex;flex-direction:column;gap:16px}
 </svg>
 <p class="cap">O ciclo não é uma linha reta: se a validação encontrar um problema, o requisito volta para a documentação (ou até para a elicitação) antes de seguir em frente.</p></div>
 </section>
+</section>
+<section class="tab" id="fluxograma" role="tabpanel" hidden>
+  <div class="sec-head"><span class="n">FLUXOGRAMA</span><h2>As quatro fases, com as voltas</h2></div>
+  <p class="lead">O diagrama da aba Como fazer mostra o ciclo. Este fluxograma mostra como o grupo trabalha dentro dele. Há duas voltas: na elicitação, cada pergunta fechada é reescrita até virar aberta; na validação, o requisito volta para correção enquanto algum critério falhar.</p>
+  <div class="visual">
+    <svg viewBox="0 0 640 656" class="sv" role="img" aria-label="Fluxograma do ciclo de um requisito: início; fase 1, listar três problemas reais da padaria; fase 2, escrever uma pergunta ao dono; se ela não for aberta, reescrever; se ainda não houver cinco perguntas, escrever outra; fase 3, documentar um requisito com identificador, tipo, descrição, critério de aceitação e prioridade; fase 4, conferir os cinco critérios; se algum item não atender, anotar a correção, ajustar o requisito e conferir de novo; se todos atenderem, propor uma melhoria; reflexão opcional; fim">
+      <defs>
+        <marker id="fp01-head" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+          <path d="M0,0 L9,4.5 L0,9 z" class="sv-headfill"/>
+        </marker>
+      </defs>
+      <rect x="100" y="8" width="200" height="32" rx="16" class="sv-box-ok"/>
+      <text x="200" y="29" class="sv-label sv-small">INÍCIO</text>
+      <path d="M200 40 L200 54" class="sv-arrow" marker-end="url(#fp01-head)"/>
+      <rect x="60" y="54" width="280" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="73" class="sv-label sv-small">Fase 1: listar 3 problemas</text>
+      <text x="200" y="90" class="sv-label sv-small">reais da padaria</text>
+      <path d="M200 100 L200 116" class="sv-arrow" marker-end="url(#fp01-head)"/>
+      <rect x="60" y="116" width="280" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="135" class="sv-label sv-small">Fase 2: escrever uma</text>
+      <text x="200" y="152" class="sv-label sv-small">pergunta ao dono</text>
+      <path d="M200 162 L200 178" class="sv-arrow" marker-end="url(#fp01-head)"/>
+
+      <polygon points="200,178 320,208 200,238 80,208" class="sv-diamond"/>
+      <text x="200" y="204" class="sv-label sv-small">É aberta (não cabe</text>
+      <text x="200" y="220" class="sv-label sv-small">sim ou não)?</text>
+      <path d="M320 208 L400 208" class="sv-arrow" marker-end="url(#fp01-head)"/>
+      <text x="346" y="200" class="sv-tag sv-no">F</text>
+      <rect x="400" y="191" width="220" height="34" rx="8" class="sv-box"/>
+      <text x="510" y="213" class="sv-label sv-small">Reescrever a pergunta</text>
+      <path d="M510 191 L510 139 L344 139" class="sv-arrow sv-arrow-soft" marker-end="url(#fp01-head)"/>
+      <path d="M200 238 L200 256" class="sv-arrow" marker-end="url(#fp01-head)"/>
+      <text x="210" y="252" class="sv-tag sv-ok">V</text>
+      <polygon points="200,256 320,286 200,316 80,286" class="sv-diamond"/>
+      <text x="200" y="282" class="sv-label sv-small">Já são 5</text>
+      <text x="200" y="298" class="sv-label sv-small">perguntas?</text>
+      <path d="M80 286 L24 286 L24 108 L196 108" class="sv-arrow sv-arrow-soft" marker-end="url(#fp01-head)"/>
+      <text x="56" y="278" class="sv-tag sv-no">F</text>
+
+      <path d="M200 316 L200 334" class="sv-arrow" marker-end="url(#fp01-head)"/>
+      <text x="210" y="330" class="sv-tag sv-ok">V</text>
+      <rect x="50" y="334" width="300" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="353" class="sv-label sv-small">Fase 3: documentar 1 requisito</text>
+      <text x="200" y="370" class="sv-label sv-small">(ID, tipo, descrição, critério, prioridade)</text>
+      <path d="M200 380 L200 400" class="sv-arrow" marker-end="url(#fp01-head)"/>
+      <rect x="60" y="400" width="280" height="32" rx="8" class="sv-box-no"/>
+      <text x="200" y="421" class="sv-label sv-small">Fase 4: conferir os 5 critérios</text>
+      <path d="M200 432 L200 448" class="sv-arrow" marker-end="url(#fp01-head)"/>
+
+      <polygon points="200,448 320,478 200,508 80,478" class="sv-diamond"/>
+      <text x="200" y="474" class="sv-label sv-small">Algum item</text>
+      <text x="200" y="490" class="sv-label sv-small">“Não atende”?</text>
+      <path d="M320 478 L400 478" class="sv-arrow" marker-end="url(#fp01-head)"/>
+      <text x="346" y="470" class="sv-tag sv-ok">V</text>
+      <rect x="400" y="455" width="220" height="46" rx="8" class="sv-box"/>
+      <text x="510" y="474" class="sv-label sv-small">Anotar a correção e</text>
+      <text x="510" y="491" class="sv-label sv-small">ajustar o requisito</text>
+      <path d="M510 455 L510 392 L204 392" class="sv-arrow sv-arrow-soft" marker-end="url(#fp01-head)"/>
+      <text x="560" y="420" class="sv-tag sv-no">conferir de novo</text>
+
+      <path d="M200 508 L200 526" class="sv-arrow" marker-end="url(#fp01-head)"/>
+      <text x="210" y="522" class="sv-tag sv-no">F</text>
+      <rect x="60" y="526" width="280" height="32" rx="8" class="sv-box-ok"/>
+      <text x="200" y="547" class="sv-label sv-small">Propor uma melhoria</text>
+      <path d="M200 558 L200 572" class="sv-arrow" marker-end="url(#fp01-head)"/>
+      <rect x="60" y="572" width="280" height="32" rx="8" class="sv-box"/>
+      <text x="200" y="593" class="sv-label sv-small">Reflexão (opcional)</text>
+      <path d="M200 604 L200 618" class="sv-arrow" marker-end="url(#fp01-head)"/>
+      <rect x="100" y="618" width="200" height="30" rx="15" class="sv-box-ok"/>
+      <text x="200" y="638" class="sv-label sv-small">FIM</text>
+    </svg>
+    <div class="cap">A caixa laranja é a validação: os cinco critérios são as cinco linhas da Fase 4. A volta “conferir de novo” é a mesma seta tracejada do ciclo da aba Como fazer: o requisito só segue em frente quando passa em todos.</div>
+  </div>
+  <div class="comoBox">
+    <h3 style="margin-top:0">Como ler o fluxograma</h3>
+    <ol class="comoList">
+      <li><span class="num">1</span><span>O primeiro losango é o teste rápido da dica da Fase 2: se a pergunta cabe num “sim” ou “não”, ela volta para ser reescrita.</span></li>
+      <li><span class="num">2</span><span>A Fase 3 usa uma das necessidades da Fase 1 e o que as perguntas da Fase 2 revelaram. As setas mostram essa ordem.</span></li>
+      <li><span class="num">3</span><span>O segundo losango decide qual campo final vocês preenchem: com algum “Não atende”, explicam a correção; sem nenhum, propõem uma melhoria.</span></li>
+      <li><span class="num">4</span><span>Achar um “Não atende” na primeira conferência não é erro: é o ciclo funcionando, como diz a própria Fase 4.</span></li>
+    </ol>
+  </div>
+</section>
 <section class="tab" id="relatorio-tab" role="tabpanel" hidden>
   <section>
     <div class="sec-head"><span class="n">PASSO 0</span><h2>Identificação</h2></div>
@@ -399,7 +481,7 @@ section.tab{display:flex;flex-direction:column;gap:16px}
         <span class="passo-num">1</span>
         <div class="passo-txt">Fase 1 — Identificação <span class="desc">Listem três problemas ou necessidades reais que o sistema deve resolver.</span></div>
       </div>
-      <div class="dica"><b>Como pensar:</b> Pensem no dia a dia real da padaria: filas, pedido errado por telefone, dificuldade de saber se tem o produto — não em recursos genéricos como "ter um app bonito".</div>
+      <div class="dica"><b>Como pensar:</b> Pensem no dia a dia real da padaria: o que costuma dar errado hoje, para o cliente e para quem atende, quando ainda não existe sistema? Evitem recursos genéricos como "ter um app bonito".</div>
       <div class="campoWrap" data-rel="campo" data-rotulo="Problema / necessidade 1"><label class="f" for="c1">Problema / necessidade 1</label><textarea id="c1" data-campo="c1" rows="4"></textarea></div>
 <div class="campoWrap" data-rel="campo" data-rotulo="Problema / necessidade 2"><label class="f" for="c2">Problema / necessidade 2</label><textarea id="c2" data-campo="c2" rows="4"></textarea></div>
 <div class="campoWrap" data-rel="campo" data-rotulo="Problema / necessidade 3"><label class="f" for="c3">Problema / necessidade 3</label><textarea id="c3" data-campo="c3" rows="4"></textarea></div>
@@ -409,7 +491,7 @@ section.tab{display:flex;flex-direction:column;gap:16px}
         <span class="passo-num">2</span>
         <div class="passo-txt">Fase 2 — Elicitação <span class="desc">Cinco perguntas abertas que vocês fariam ao dono da padaria (evitem perguntas de sim/não).</span></div>
       </div>
-      <div class="dica"><b>Como pensar:</b> Teste rápido: se a pergunta pode ser respondida só com "sim" ou "não" (ex.: "o senhor quer um app?"), ela é fechada — troque por algo que abra espaço para detalhes (ex.: "como os clientes fazem pedido hoje?").</div>
+      <div class="dica"><b>Como pensar:</b> Teste rápido: se a pergunta pode ser respondida só com "sim" ou "não" (ex.: "o senhor quer um app?"), ela é fechada — troque por algo que abra espaço para detalhes. Exemplo de outro negócio, uma oficina mecânica: "como vocês registram hoje os carros que chegam?".</div>
       <div class="campoWrap" data-rel="campo" data-rotulo="Pergunta 1"><label class="f" for="c4">Pergunta 1</label><input type="text" id="c4" data-campo="c4" placeholder=""></div>
 <div class="campoWrap" data-rel="campo" data-rotulo="Pergunta 2"><label class="f" for="c5">Pergunta 2</label><input type="text" id="c5" data-campo="c5" placeholder=""></div>
 <div class="campoWrap" data-rel="campo" data-rotulo="Pergunta 3"><label class="f" for="c6">Pergunta 3</label><input type="text" id="c6" data-campo="c6" placeholder=""></div>

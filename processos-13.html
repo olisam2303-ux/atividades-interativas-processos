@@ -326,7 +326,7 @@ section.tab{display:flex;flex-direction:column;gap:16px}
 
   <nav class="tabs" role="tablist" aria-label="Partes da atividade">
     <button role="tab" data-tab="como" id="t-como" aria-selected="true">Como fazer</button>
-    <button role="tab" data-tab="diagrama" id="t-diagrama" aria-selected="false">Diagrama</button>
+    <button role="tab" data-tab="fluxograma" id="t-fluxograma" aria-selected="false">Fluxograma</button>
     <button role="tab" data-tab="relatorio-tab" id="t-relatorio-tab" aria-selected="false">Relatório</button>
   </nav>
 
@@ -343,9 +343,8 @@ section.tab{display:flex;flex-direction:column;gap:16px}
     </ul>
   </section>
 
-    </section>
-<section class="tab" id="diagrama" role="tabpanel" hidden>
-  <div class="sec-head"><span class="n">DIAGRAMA</span><h2>Métricas ágeis: Velocity, Burndown e CFD</h2></div>
+    <section>
+  <div class="sec-head"><span class="n">ENTENDA</span><h2>Métricas ágeis: Velocity, Burndown e CFD</h2></div>
   <p class="lead">Use o diagrama como mapa da atividade: ele mostra a estrutura que as respostas do grupo precisam seguir.</p>
   <div class="visual claro"><svg viewBox="0 0 460 160" role="img" aria-label="Um CFD com gargalo: a faixa de Code Review fica cada vez mais larga ao longo dos dias, enquanto a faixa de Done cresce devagar, mostrando que o trabalho se acumula antes de ser aprovado">
 <style>.p13t{font:10.5px sans-serif;fill:#17231f}</style>
@@ -369,6 +368,68 @@ section.tab{display:flex;flex-direction:column;gap:16px}
 <text class="p13f" x="310" y="30">Throughput</text><text class="p13d" x="310" y="55">itens entregues por dia</text>
 </svg>
 <p class="cap">WIP = soma de tudo que ainda não chegou em Done (todas as colunas antes dela).</p></div>
+</section>
+    </section>
+<section class="tab" id="fluxograma" role="tabpanel" hidden>
+  <div class="sec-head"><span class="n">FLUXOGRAMA</span><h2>O diagnóstico do Scrum Master</h2></div>
+  <p class="lead">O fluxograma mostra a ordem da atividade: um laço que diagnostica os dois cenários de CFD, seguido do cálculo de lead time do Cenário 3.</p>
+  <div class="visual">
+    <svg viewBox="0 0 640 454" class="sv" role="img" aria-label="Fluxograma do diagnóstico: início; pegar o próximo cenário de CFD, dos dois no total; diagnosticar problema, risco e violação; propor recomendação e responsável; se faltar cenário, voltar e pegar o próximo; quando não faltar nenhum, calcular o lead time do cenário 3; explicar o que isso significa para quem espera a entrega; fim">
+      <defs>
+        <marker id="fp13-head" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+          <path d="M0,0 L9,4.5 L0,9 z" class="sv-headfill"/>
+        </marker>
+      </defs>
+      <rect x="100" y="8" width="200" height="32" rx="16" class="sv-box-ok"/>
+      <text x="200" y="29" class="sv-label sv-small">INÍCIO</text>
+      <path d="M200 40 L200 54" class="sv-arrow" marker-end="url(#fp13-head)"/>
+
+      <rect x="60" y="54" width="280" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="73" class="sv-label sv-small">Pegar o próximo cenário de</text>
+      <text x="200" y="90" class="sv-label sv-small">CFD (2 no total)</text>
+      <path d="M200 100 L200 114" class="sv-arrow" marker-end="url(#fp13-head)"/>
+
+      <rect x="60" y="114" width="280" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="133" class="sv-label sv-small">Diagnosticar: problema,</text>
+      <text x="200" y="150" class="sv-label sv-small">risco e violação</text>
+      <path d="M200 160 L200 174" class="sv-arrow" marker-end="url(#fp13-head)"/>
+
+      <rect x="60" y="174" width="280" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="193" class="sv-label sv-small">Propor recomendação e</text>
+      <text x="200" y="210" class="sv-label sv-small">responsável</text>
+      <path d="M200 220 L200 234" class="sv-arrow" marker-end="url(#fp13-head)"/>
+
+      <polygon points="200,234 300,256 200,278 100,256" class="sv-diamond"/>
+      <text x="200" y="261" class="sv-label sv-small">Falta cenário?</text>
+      <path d="M100 256 L24 256 L24 54 L196 54" class="sv-arrow sv-arrow-soft" marker-end="url(#fp13-head)"/>
+      <text x="40" y="248" class="sv-tag sv-ok">V</text>
+      <path d="M200 278 L200 292" class="sv-arrow" marker-end="url(#fp13-head)"/>
+      <text x="210" y="288" class="sv-tag sv-no">F</text>
+
+      <rect x="60" y="292" width="280" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="311" class="sv-label sv-small">Calcular o lead time:</text>
+      <text x="200" y="328" class="sv-label sv-small">WIP ÷ throughput (Cenário 3)</text>
+      <path d="M200 338 L200 352" class="sv-arrow" marker-end="url(#fp13-head)"/>
+
+      <rect x="60" y="352" width="280" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="371" class="sv-label sv-small">Explicar o que isso significa</text>
+      <text x="200" y="388" class="sv-label sv-small">para quem espera a entrega</text>
+      <path d="M200 398 L200 412" class="sv-arrow" marker-end="url(#fp13-head)"/>
+
+      <rect x="100" y="412" width="200" height="32" rx="16" class="sv-box-ok"/>
+      <text x="200" y="433" class="sv-label sv-small">FIM</text>
+    </svg>
+    <div class="cap">O Cenário 3 usa os números do quiz (To Do, In Progress, Testing, Done, throughput) — não os dois primeiros cenários.</div>
+  </div>
+  <div class="comoBox">
+    <h3 style="margin-top:0">Como ler o fluxograma</h3>
+    <ol class="comoList">
+      <li><span class="num">1</span><span>O laço se repete duas vezes: primeiro o Cenário 1 (Sprint 30), depois o Cenário 2 (Sprint 31).</span></li>
+      <li><span class="num">2</span><span>Cada cenário tem seu próprio diagnóstico — a violação de boa prática pode ser diferente em cada um.</span></li>
+      <li><span class="num">3</span><span>O WIP do Cenário 3 é a soma de todas as colunas do quiz que não são Done — Done já saiu do sistema.</span></li>
+      <li><span class="num">4</span><span>A recomendação precisa ser uma ação prática ligada ao problema identificado, não uma resposta genérica.</span></li>
+    </ol>
+  </div>
 </section>
 <section class="tab" id="relatorio-tab" role="tabpanel" hidden>
   <section>

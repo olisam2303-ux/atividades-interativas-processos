@@ -326,7 +326,7 @@ section.tab{display:flex;flex-direction:column;gap:16px}
 
   <nav class="tabs" role="tablist" aria-label="Partes da atividade">
     <button role="tab" data-tab="como" id="t-como" aria-selected="true">Como fazer</button>
-    <button role="tab" data-tab="diagrama" id="t-diagrama" aria-selected="false">Diagrama</button>
+    <button role="tab" data-tab="fluxograma" id="t-fluxograma" aria-selected="false">Fluxograma</button>
     <button role="tab" data-tab="relatorio-tab" id="t-relatorio-tab" aria-selected="false">Relatório</button>
   </nav>
 
@@ -344,9 +344,8 @@ section.tab{display:flex;flex-direction:column;gap:16px}
     </ul>
   </section>
 
-    </section>
-<section class="tab" id="diagrama" role="tabpanel" hidden>
-  <div class="sec-head"><span class="n">DIAGRAMA</span><h2>Papéis no Scrum: o Product Owner</h2></div>
+    <section>
+  <div class="sec-head"><span class="n">ENTENDA</span><h2>Papéis no Scrum: o Product Owner</h2></div>
   <p class="lead">Use o diagrama como mapa da atividade: ele mostra a estrutura que as respostas do grupo precisam seguir.</p>
   <div class="visual claro"><svg viewBox="0 0 560 60" role="img" aria-label="Fórmula da user story: como um tipo de usuário, quero uma funcionalidade, para obter um valor ou benefício">
 <style>.p12t{font:700 13px sans-serif;fill:#0a5e55}.p12d{font:11px sans-serif;fill:#59736c}</style>
@@ -372,6 +371,85 @@ section.tab{display:flex;flex-direction:column;gap:16px}
 <text class="p12q" x="322" y="195" fill="#8f2229">🚫 Evitar</text><text class="p12s" x="322" y="215" fill="#8f2229">baixo valor, muito esforço</text>
 </svg>
 <p class="cap">ROI = Valor ÷ Esforço — quanto mais alto, mais para a esquerda-cima do gráfico o item cai, e mais prioridade ele merece.</p></div>
+</section>
+    </section>
+<section class="tab" id="fluxograma" role="tabpanel" hidden>
+  <div class="sec-head"><span class="n">FLUXOGRAMA</span><h2>O caminho do Product Owner</h2></div>
+  <p class="lead">O fluxograma mostra a ordem da atividade: dois laços (refinar o backlog, depois priorizar por ROI), e só então a pressão do stakeholder.</p>
+  <div class="visual">
+    <svg viewBox="0 0 640 632" class="sv" role="img" aria-label="Fluxograma do Product Owner: início; pegar a próxima necessidade bruta, das quatro no total; escrever user story e critério de aceitação; quebrar em pedaços menores se estiver grande; se faltar necessidade, voltar e pegar a próxima; pegar o próximo item para priorizar, dos três no total; dar nota de valor e esforço e calcular ROI; se faltar item, voltar e pegar o próximo; responder à pressão do stakeholder; responder as perguntas de consolidação; fim">
+      <defs>
+        <marker id="fp12-head" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+          <path d="M0,0 L9,4.5 L0,9 z" class="sv-headfill"/>
+        </marker>
+      </defs>
+      <rect x="100" y="8" width="200" height="32" rx="16" class="sv-box-ok"/>
+      <text x="200" y="29" class="sv-label sv-small">INÍCIO</text>
+      <path d="M200 40 L200 54" class="sv-arrow" marker-end="url(#fp12-head)"/>
+
+      <rect x="60" y="54" width="280" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="73" class="sv-label sv-small">Pegar a próxima necessidade</text>
+      <text x="200" y="90" class="sv-label sv-small">bruta (4 no total)</text>
+      <path d="M200 100 L200 114" class="sv-arrow" marker-end="url(#fp12-head)"/>
+
+      <rect x="60" y="114" width="280" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="133" class="sv-label sv-small">Escrever user story +</text>
+      <text x="200" y="150" class="sv-label sv-small">critério de aceitação (Parte 1)</text>
+      <path d="M200 160 L200 174" class="sv-arrow" marker-end="url(#fp12-head)"/>
+
+      <rect x="60" y="174" width="280" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="193" class="sv-label sv-small">Quebrar em pedaços menores</text>
+      <text x="200" y="210" class="sv-label sv-small">se estiver grande</text>
+      <path d="M200 220 L200 234" class="sv-arrow" marker-end="url(#fp12-head)"/>
+
+      <polygon points="200,234 300,256 200,278 100,256" class="sv-diamond"/>
+      <text x="200" y="261" class="sv-label sv-small">Falta necessidade?</text>
+      <path d="M100 256 L24 256 L24 54 L196 54" class="sv-arrow sv-arrow-soft" marker-end="url(#fp12-head)"/>
+      <text x="40" y="248" class="sv-tag sv-ok">V</text>
+      <path d="M200 278 L200 292" class="sv-arrow" marker-end="url(#fp12-head)"/>
+      <text x="210" y="288" class="sv-tag sv-no">F</text>
+
+      <rect x="60" y="292" width="280" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="311" class="sv-label sv-small">Pegar o próximo item para</text>
+      <text x="200" y="328" class="sv-label sv-small">priorizar (3 no total)</text>
+      <path d="M200 338 L200 352" class="sv-arrow" marker-end="url(#fp12-head)"/>
+
+      <rect x="60" y="352" width="280" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="371" class="sv-label sv-small">Dar nota de Valor e Esforço;</text>
+      <text x="200" y="388" class="sv-label sv-small">calcular ROI (Parte 2)</text>
+      <path d="M200 398 L200 412" class="sv-arrow" marker-end="url(#fp12-head)"/>
+
+      <polygon points="200,412 300,434 200,456 100,434" class="sv-diamond"/>
+      <text x="200" y="439" class="sv-label sv-small">Falta item?</text>
+      <path d="M100 434 L24 434 L24 292 L196 292" class="sv-arrow sv-arrow-soft" marker-end="url(#fp12-head)"/>
+      <text x="40" y="426" class="sv-tag sv-ok">V</text>
+      <path d="M200 456 L200 470" class="sv-arrow" marker-end="url(#fp12-head)"/>
+      <text x="210" y="466" class="sv-tag sv-no">F</text>
+
+      <rect x="60" y="470" width="280" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="489" class="sv-label sv-small">Responder à pressão do</text>
+      <text x="200" y="506" class="sv-label sv-small">stakeholder (Parte 3)</text>
+      <path d="M200 516 L200 530" class="sv-arrow" marker-end="url(#fp12-head)"/>
+
+      <rect x="60" y="530" width="280" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="549" class="sv-label sv-small">Responder as perguntas de</text>
+      <text x="200" y="566" class="sv-label sv-small">consolidação (Parte 4)</text>
+      <path d="M200 576 L200 590" class="sv-arrow" marker-end="url(#fp12-head)"/>
+
+      <rect x="100" y="590" width="200" height="32" rx="16" class="sv-box-ok"/>
+      <text x="200" y="611" class="sv-label sv-small">FIM</text>
+    </svg>
+    <div class="cap">O ROI (Parte 2) usa os itens já refinados (Parte 1) — o backlog inteiro é refinado antes de priorizar.</div>
+  </div>
+  <div class="comoBox">
+    <h3 style="margin-top:0">Como ler o fluxograma</h3>
+    <ol class="comoList">
+      <li><span class="num">1</span><span>O primeiro laço (Parte 1) transforma cada uma das 4 necessidades brutas em user story — nem toda precisa ser quebrada em pedaços menores.</span></li>
+      <li><span class="num">2</span><span>O segundo laço (Parte 2) prioriza só 3 itens do backlog — a escolha de quais é do grupo.</span></li>
+      <li><span class="num">3</span><span>A pressão do stakeholder (Parte 3) usa a priorização já feita — "o que prometi" e "o que segurei" vêm do ROI calculado, não de uma escolha nova.</span></li>
+      <li><span class="num">4</span><span>As perguntas de consolidação (Parte 4) fecham a reflexão sobre o papel de PO, depois de tudo.</span></li>
+    </ol>
+  </div>
 </section>
 <section class="tab" id="relatorio-tab" role="tabpanel" hidden>
   <section>

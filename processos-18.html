@@ -326,7 +326,7 @@ section.tab{display:flex;flex-direction:column;gap:16px}
 
   <nav class="tabs" role="tablist" aria-label="Partes da atividade">
     <button role="tab" data-tab="como" id="t-como" aria-selected="true">Como fazer</button>
-    <button role="tab" data-tab="diagrama" id="t-diagrama" aria-selected="false">Diagrama</button>
+    <button role="tab" data-tab="fluxograma" id="t-fluxograma" aria-selected="false">Fluxograma</button>
     <button role="tab" data-tab="relatorio-tab" id="t-relatorio-tab" aria-selected="false">Relatório</button>
   </nav>
 
@@ -344,20 +344,88 @@ section.tab{display:flex;flex-direction:column;gap:16px}
     </ul>
   </section>
 
-    </section>
-<section class="tab" id="diagrama" role="tabpanel" hidden>
-  <div class="sec-head"><span class="n">DIAGRAMA</span><h2>Kanban: fluxo contínuo e limites de WIP</h2></div>
+    <section>
+  <div class="sec-head"><span class="n">ENTENDA</span><h2>Kanban: fluxo contínuo e limites de WIP</h2></div>
   <p class="lead">Use o diagrama como mapa da atividade: ele mostra a estrutura que as respostas do grupo precisam seguir.</p>
   <div class="visual claro"><svg viewBox="0 0 460 150" role="img" aria-label="Quadro Kanban com política explícita na coluna feito, limite de WIP na coluna em execução, e quatro classes de serviço: urgente, data fixa, padrão e intangível"><style>.p18t{font:700 11px sans-serif;fill:#17231f;text-anchor:middle}.p18d{font:9.5px sans-serif;fill:#59736c;text-anchor:middle}</style>
 <rect x="10" y="10" width="130" height="90" rx="6" fill="#fbfdfc" stroke="#d3e3e0"></rect><text class="p18t" x="75" y="26">A fazer</text>
 <rect x="150" y="10" width="130" height="90" rx="6" fill="#fbfdfc" stroke="#d3e3e0"></rect><text class="p18t" x="215" y="26">Em execução</text><text class="p18d" x="215" y="42">limite de WIP: só cabem</text><text class="p18d" x="215" y="54">N tarefas ao mesmo tempo</text>
-<rect x="290" y="10" width="160" height="90" rx="6" fill="#e6f6ee" stroke="#1b8a5a"></rect><text class="p18t" x="370" y="26" fill="#0f5e3f">Feito</text><text class="p18d" x="370" y="42" fill="#0f5e3f">só entra aqui se passar</text><text class="p18d" x="370" y="54" fill="#0f5e3f">pela política explícita</text><text class="p18d" x="370" y="66" fill="#0f5e3f">(ex.: "testado e sem bug crítico")</text>
+<rect x="290" y="10" width="160" height="90" rx="6" fill="#e6f6ee" stroke="#1b8a5a"></rect><text class="p18t" x="370" y="26" fill="#0f5e3f">Feito</text><text class="p18d" x="370" y="42" fill="#0f5e3f">só entra aqui se passar</text><text class="p18d" x="370" y="54" fill="#0f5e3f">por um critério objetivo</text><text class="p18d" x="370" y="66" fill="#0f5e3f">e checável por qualquer pessoa</text>
 <rect x="10" y="115" width="105" height="26" rx="6" fill="#c9333a"></rect><text x="62" y="132" font-size="9.5" fill="#fff" text-anchor="middle">Urgente</text>
 <rect x="120" y="115" width="105" height="26" rx="6" fill="#8a5a1b"></rect><text x="172" y="132" font-size="9.5" fill="#fff" text-anchor="middle">Data fixa</text>
 <rect x="230" y="115" width="105" height="26" rx="6" fill="#0e8074"></rect><text x="282" y="132" font-size="9.5" fill="#fff" text-anchor="middle">Padrão</text>
 <rect x="340" y="115" width="105" height="26" rx="6" fill="#3a5a8a"></rect><text x="392" y="132" font-size="9.5" fill="#fff" text-anchor="middle">Intangível</text>
 </svg>
 <p class="cap">Uma política explícita evita o retorno de tarefas de "Feito"; as classes de serviço decidem o que passa na frente sem precisar gritar "urgente" toda vez.</p></div>
+</section>
+    </section>
+<section class="tab" id="fluxograma" role="tabpanel" hidden>
+  <div class="sec-head"><span class="n">FLUXOGRAMA</span><h2>Montando o contrato da equipe</h2></div>
+  <p class="lead">O fluxograma mostra a ordem da atividade: dois laços (políticas explícitas, depois classes de serviço) e por fim o efeito no lead time.</p>
+  <div class="visual">
+    <svg viewBox="0 0 640 512" class="sv" role="img" aria-label="Fluxograma do contrato da equipe: início; pegar a próxima política explícita, das duas no total; definir um critério objetivo para feito; se faltar política, voltar e pegar a próxima; pegar a próxima classe de serviço, das três no total; definir nome e quando se aplica; se faltar classe, voltar e pegar a próxima; explicar o efeito no lead time; fim">
+      <defs>
+        <marker id="fp18-head" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+          <path d="M0,0 L9,4.5 L0,9 z" class="sv-headfill"/>
+        </marker>
+      </defs>
+      <rect x="100" y="8" width="200" height="32" rx="16" class="sv-box-ok"/>
+      <text x="200" y="29" class="sv-label sv-small">INÍCIO</text>
+      <path d="M200 40 L200 54" class="sv-arrow" marker-end="url(#fp18-head)"/>
+
+      <rect x="60" y="54" width="280" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="73" class="sv-label sv-small">Pegar a próxima política</text>
+      <text x="200" y="90" class="sv-label sv-small">explícita (2 no total)</text>
+      <path d="M200 100 L200 114" class="sv-arrow" marker-end="url(#fp18-head)"/>
+
+      <rect x="60" y="114" width="280" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="133" class="sv-label sv-small">Definir um critério objetivo</text>
+      <text x="200" y="150" class="sv-label sv-small">para "Feito" (Passo 1)</text>
+      <path d="M200 160 L200 174" class="sv-arrow" marker-end="url(#fp18-head)"/>
+
+      <polygon points="200,174 300,196 200,218 100,196" class="sv-diamond"/>
+      <text x="200" y="201" class="sv-label sv-small">Falta política?</text>
+      <path d="M100 196 L24 196 L24 54 L196 54" class="sv-arrow sv-arrow-soft" marker-end="url(#fp18-head)"/>
+      <text x="40" y="188" class="sv-tag sv-ok">V</text>
+      <path d="M200 218 L200 232" class="sv-arrow" marker-end="url(#fp18-head)"/>
+      <text x="210" y="228" class="sv-tag sv-no">F</text>
+
+      <rect x="60" y="232" width="280" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="251" class="sv-label sv-small">Pegar a próxima classe de</text>
+      <text x="200" y="268" class="sv-label sv-small">serviço (3 no total)</text>
+      <path d="M200 278 L200 292" class="sv-arrow" marker-end="url(#fp18-head)"/>
+
+      <rect x="60" y="292" width="280" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="311" class="sv-label sv-small">Definir nome e quando se</text>
+      <text x="200" y="328" class="sv-label sv-small">aplica (Passo 2)</text>
+      <path d="M200 338 L200 352" class="sv-arrow" marker-end="url(#fp18-head)"/>
+
+      <polygon points="200,352 300,374 200,396 100,374" class="sv-diamond"/>
+      <text x="200" y="379" class="sv-label sv-small">Falta classe?</text>
+      <path d="M100 374 L24 374 L24 232 L196 232" class="sv-arrow sv-arrow-soft" marker-end="url(#fp18-head)"/>
+      <text x="40" y="366" class="sv-tag sv-ok">V</text>
+      <path d="M200 396 L200 410" class="sv-arrow" marker-end="url(#fp18-head)"/>
+      <text x="210" y="406" class="sv-tag sv-no">F</text>
+
+      <rect x="60" y="410" width="280" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="429" class="sv-label sv-small">Explicar o efeito no lead</text>
+      <text x="200" y="446" class="sv-label sv-small">time (Passo 3)</text>
+      <path d="M200 456 L200 470" class="sv-arrow" marker-end="url(#fp18-head)"/>
+
+      <rect x="100" y="470" width="200" height="32" rx="16" class="sv-box-ok"/>
+      <text x="200" y="491" class="sv-label sv-small">FIM</text>
+    </svg>
+    <div class="cap">O Passo 3 só faz sentido depois dos dois laços: ele junta o efeito das políticas e das classes de serviço.</div>
+  </div>
+  <div class="comoBox">
+    <h3 style="margin-top:0">Como ler o fluxograma</h3>
+    <ol class="comoList">
+      <li><span class="num">1</span><span>O primeiro laço (Passo 1) se repete 2 vezes — cada política precisa ser um critério objetivo, que qualquer pessoa consiga checar.</span></li>
+      <li><span class="num">2</span><span>O segundo laço (Passo 2) se repete 3 vezes — expliquem quando cada classe se aplica, não só o nome.</span></li>
+      <li><span class="num">3</span><span>O Passo 3 só faz sentido depois dos dois laços: ele explica como políticas e classes de serviço, juntas, estabilizam o lead time.</span></li>
+      <li><span class="num">4</span><span>"Objetivo e checável" significa que duas pessoas diferentes, olhando a mesma tarefa, chegariam à mesma conclusão.</span></li>
+    </ol>
+  </div>
 </section>
 <section class="tab" id="relatorio-tab" role="tabpanel" hidden>
   <section>

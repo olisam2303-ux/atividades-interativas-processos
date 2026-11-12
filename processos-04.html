@@ -326,7 +326,7 @@ section.tab{display:flex;flex-direction:column;gap:16px}
 
   <nav class="tabs" role="tablist" aria-label="Partes da atividade">
     <button role="tab" data-tab="como" id="t-como" aria-selected="true">Como fazer</button>
-    <button role="tab" data-tab="diagrama" id="t-diagrama" aria-selected="false">Diagrama</button>
+    <button role="tab" data-tab="fluxograma" id="t-fluxograma" aria-selected="false">Fluxograma</button>
     <button role="tab" data-tab="relatorio-tab" id="t-relatorio-tab" aria-selected="false">Relatório</button>
   </nav>
 
@@ -344,9 +344,8 @@ section.tab{display:flex;flex-direction:column;gap:16px}
     </ul>
   </section>
 
-    </section>
-<section class="tab" id="diagrama" role="tabpanel" hidden>
-  <div class="sec-head"><span class="n">DIAGRAMA</span><h2>Introdução aos testes de software e tipos de testes</h2></div>
+    <section>
+  <div class="sec-head"><span class="n">ENTENDA</span><h2>Introdução aos testes de software e tipos de testes</h2></div>
   <p class="lead">Use o diagrama como mapa da atividade: ele mostra a estrutura que as respostas do grupo precisam seguir.</p>
   <div class="visual claro"><svg viewBox="0 0 420 220" role="img" aria-label="Pirâmide de testes: base larga de testes unitários, depois integração, depois E2E, e o topo estreito com testes manuais — a base deve ter mais testes que o topo">
 <style>.p4t{font:700 13px sans-serif;fill:#fff;text-anchor:middle}.p4d{font:11px sans-serif;fill:#e6f6ee;text-anchor:middle}</style>
@@ -356,6 +355,62 @@ section.tab{display:flex;flex-direction:column;gap:16px}
 <polygon points="60,154 360,154 390,199 30,199" fill="#0a5e55"></polygon><text class="p4t" x="210" y="179">Unitário</text><text class="p4d" x="210" y="193">muitos, rápidos e baratos — a base</text>
 </svg>
 <p class="cap">Quanto mais embaixo na pirâmide, mais rápido e barato é o teste — por isso a maioria dos 10 testes da Parte 2 deve ficar na base (unitário), e só alguns poucos no topo (manual).</p></div>
+</section>
+</section>
+<section class="tab" id="fluxograma" role="tabpanel" hidden>
+  <div class="sec-head"><span class="n">FLUXOGRAMA</span><h2>Mapeando e priorizando os testes</h2></div>
+  <p class="lead">O fluxograma mostra o processo da Parte 1: um laço que pede um teste para cada um dos quatro níveis. Depois, a Parte 2 distribui 10 testes entre eles, seguindo a forma da pirâmide. Os testes descritos e os números de cada nível são do grupo.</p>
+  <div class="visual">
+    <svg viewBox="0 0 640 382" class="sv" role="img" aria-label="Fluxograma do arquiteto de testes: início; pegar o próximo nível, unitário, integração, E2E ou manual; descrever um teste desse nível; se faltar nível, voltar e pegar o próximo; quando não faltar nenhum, distribuir dez testes entre os quatro níveis seguindo a forma da pirâmide, e justificar a distribuição; fim">
+      <defs>
+        <marker id="fp04-head" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+          <path d="M0,0 L9,4.5 L0,9 z" class="sv-headfill"/>
+        </marker>
+      </defs>
+      <rect x="100" y="8" width="200" height="32" rx="16" class="sv-box-ok"/>
+      <text x="200" y="29" class="sv-label sv-small">INÍCIO</text>
+      <path d="M200 40 L200 54" class="sv-arrow" marker-end="url(#fp04-head)"/>
+
+      <rect x="60" y="54" width="280" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="73" class="sv-label sv-small">Pegar o próximo nível</text>
+      <text x="200" y="90" class="sv-label sv-small">(unitário, integração, E2E, manual)</text>
+      <path d="M200 100 L200 114" class="sv-arrow" marker-end="url(#fp04-head)"/>
+
+      <rect x="60" y="114" width="280" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="133" class="sv-label sv-small">Descrever 1 teste desse</text>
+      <text x="200" y="150" class="sv-label sv-small">nível (Parte 1)</text>
+      <path d="M200 160 L200 174" class="sv-arrow" marker-end="url(#fp04-head)"/>
+
+      <polygon points="200,174 300,196 200,218 100,196" class="sv-diamond"/>
+      <text x="200" y="203" class="sv-label sv-small">Falta nível?</text>
+      <path d="M100 196 L24 196 L24 54 L196 54" class="sv-arrow sv-arrow-soft" marker-end="url(#fp04-head)"/>
+      <text x="40" y="188" class="sv-tag sv-ok">V</text>
+      <path d="M200 218 L200 234" class="sv-arrow" marker-end="url(#fp04-head)"/>
+      <text x="210" y="230" class="sv-tag sv-no">F</text>
+
+      <rect x="60" y="234" width="280" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="253" class="sv-label sv-small">Distribuir 10 testes entre</text>
+      <text x="200" y="270" class="sv-label sv-small">os 4 níveis, forma da pirâmide (P2)</text>
+      <path d="M200 280 L200 294" class="sv-arrow" marker-end="url(#fp04-head)"/>
+
+      <rect x="60" y="294" width="280" height="32" rx="8" class="sv-box"/>
+      <text x="200" y="315" class="sv-label sv-small">Justificar a distribuição</text>
+      <path d="M200 326 L200 340" class="sv-arrow" marker-end="url(#fp04-head)"/>
+
+      <rect x="100" y="340" width="200" height="32" rx="16" class="sv-box-ok"/>
+      <text x="200" y="361" class="sv-label sv-small">FIM</text>
+    </svg>
+    <div class="cap">O laço passa pelos quatro níveis uma vez cada — não diz qual teste escrever, só lembra que nenhum nível pode ficar de fora da Parte 1.</div>
+  </div>
+  <div class="comoBox">
+    <h3 style="margin-top:0">Como ler o fluxograma</h3>
+    <ol class="comoList">
+      <li><span class="num">1</span><span>A Parte 1 descreve um teste por nível; a Parte 2 distribui dez testes pelos mesmos quatro níveis — são contagens diferentes, não confundam.</span></li>
+      <li><span class="num">2</span><span>A forma da pirâmide (aba Como fazer) dá a regra geral: mais testes na base (unitário), menos no topo (manual) — os números exatos são do grupo.</span></li>
+      <li><span class="num">3</span><span>A soma dos quatro números da Parte 2 precisa dar exatamente 10 — confiram antes de gerar o PDF.</span></li>
+      <li><span class="num">4</span><span>A justificativa da Parte 2 explica o porquê da distribuição escolhida, não só repete os números.</span></li>
+    </ol>
+  </div>
 </section>
 <section class="tab" id="relatorio-tab" role="tabpanel" hidden>
   <section>

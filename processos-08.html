@@ -326,7 +326,7 @@ section.tab{display:flex;flex-direction:column;gap:16px}
 
   <nav class="tabs" role="tablist" aria-label="Partes da atividade">
     <button role="tab" data-tab="como" id="t-como" aria-selected="true">Como fazer</button>
-    <button role="tab" data-tab="diagrama" id="t-diagrama" aria-selected="false">Diagrama</button>
+    <button role="tab" data-tab="fluxograma" id="t-fluxograma" aria-selected="false">Fluxograma</button>
     <button role="tab" data-tab="relatorio-tab" id="t-relatorio-tab" aria-selected="false">Relatório</button>
   </nav>
 
@@ -344,9 +344,8 @@ section.tab{display:flex;flex-direction:column;gap:16px}
     </ul>
   </section>
 
-    </section>
-<section class="tab" id="diagrama" role="tabpanel" hidden>
-  <div class="sec-head"><span class="n">DIAGRAMA</span><h2>Casos de teste funcional e automação básica</h2></div>
+    <section>
+  <div class="sec-head"><span class="n">ENTENDA</span><h2>Casos de teste funcional e automação básica</h2></div>
   <p class="lead">Use o diagrama como mapa da atividade: ele mostra a estrutura que as respostas do grupo precisam seguir.</p>
   <div class="visual claro"><svg viewBox="0 0 420 240" role="img" aria-label="A receita de um caso de teste: ID, título, precondições, dados de teste, passos e resultado esperado, em ordem">
 <style>.p8t{font:700 12.5px sans-serif;fill:#17231f}.p8d{font:10.5px sans-serif;fill:#59736c}</style>
@@ -364,6 +363,73 @@ section.tab{display:flex;flex-direction:column;gap:16px}
 <text class="p8t" x="22" y="217">6. Resultado esperado</text><text class="p8d" x="22" y="228">o que precisa acontecer para o teste passar</text>
 </svg>
 <p class="cap">Toda "receita de teste" segue essa mesma ordem — os 3 casos que vocês vão escrever precisam ter os 6 ingredientes.</p></div>
+</section>
+    </section>
+<section class="tab" id="fluxograma" role="tabpanel" hidden>
+  <div class="sec-head"><span class="n">FLUXOGRAMA</span><h2>Montando os casos de teste</h2></div>
+  <p class="lead">O fluxograma mostra a ordem da atividade: um laço que percorre os dois casos de teste (a variação do caminho feliz e o caso autoral de erro), seguido das perguntas de consolidação.</p>
+  <div class="visual">
+    <svg viewBox="0 0 640 514" class="sv" role="img" aria-label="Fluxograma dos casos de teste: início; ler a receita de teste com os 6 ingredientes; pegar o próximo caso, dos dois no total; preencher ID, título e precondições; preencher dados de teste e passos; escrever resultado esperado; se faltar caso, voltar e pegar o próximo; quando não faltar nenhum, responder as perguntas de consolidação; fim">
+      <defs>
+        <marker id="fp08-head" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+          <path d="M0,0 L9,4.5 L0,9 z" class="sv-headfill"/>
+        </marker>
+      </defs>
+      <rect x="100" y="8" width="200" height="32" rx="16" class="sv-box-ok"/>
+      <text x="200" y="29" class="sv-label sv-small">INÍCIO</text>
+      <path d="M200 40 L200 54" class="sv-arrow" marker-end="url(#fp08-head)"/>
+
+      <rect x="60" y="54" width="280" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="73" class="sv-label sv-small">Ler a receita de teste</text>
+      <text x="200" y="90" class="sv-label sv-small">(6 ingredientes, aba Como fazer)</text>
+      <path d="M200 100 L200 114" class="sv-arrow" marker-end="url(#fp08-head)"/>
+
+      <rect x="60" y="114" width="280" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="133" class="sv-label sv-small">Pegar o próximo caso</text>
+      <text x="200" y="150" class="sv-label sv-small">(2 no total)</text>
+      <path d="M200 160 L200 174" class="sv-arrow" marker-end="url(#fp08-head)"/>
+
+      <rect x="60" y="174" width="280" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="193" class="sv-label sv-small">Preencher ID, título e</text>
+      <text x="200" y="210" class="sv-label sv-small">precondições</text>
+      <path d="M200 220 L200 234" class="sv-arrow" marker-end="url(#fp08-head)"/>
+
+      <rect x="60" y="234" width="280" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="253" class="sv-label sv-small">Preencher dados de teste</text>
+      <text x="200" y="270" class="sv-label sv-small">e passos</text>
+      <path d="M200 280 L200 294" class="sv-arrow" marker-end="url(#fp08-head)"/>
+
+      <rect x="60" y="294" width="280" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="313" class="sv-label sv-small">Escrever resultado esperado</text>
+      <text x="200" y="330" class="sv-label sv-small">(objetivo e verificável)</text>
+      <path d="M200 340 L200 354" class="sv-arrow" marker-end="url(#fp08-head)"/>
+
+      <polygon points="200,354 300,376 200,398 100,376" class="sv-diamond"/>
+      <text x="200" y="381" class="sv-label sv-small">Falta caso?</text>
+      <path d="M100 376 L24 376 L24 114 L196 114" class="sv-arrow sv-arrow-soft" marker-end="url(#fp08-head)"/>
+      <text x="40" y="368" class="sv-tag sv-ok">V</text>
+      <path d="M200 398 L200 412" class="sv-arrow" marker-end="url(#fp08-head)"/>
+      <text x="210" y="408" class="sv-tag sv-no">F</text>
+
+      <rect x="60" y="412" width="280" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="431" class="sv-label sv-small">Responder as perguntas</text>
+      <text x="200" y="448" class="sv-label sv-small">de consolidação (Aula 1)</text>
+      <path d="M200 458 L200 472" class="sv-arrow" marker-end="url(#fp08-head)"/>
+
+      <rect x="100" y="472" width="200" height="32" rx="16" class="sv-box-ok"/>
+      <text x="200" y="493" class="sv-label sv-small">FIM</text>
+    </svg>
+    <div class="cap">Primeiro a variação do caminho feliz (CT-LOGIN-001), depois o caso autoral de erro — cada um passa pelos mesmos 6 ingredientes.</div>
+  </div>
+  <div class="comoBox">
+    <h3 style="margin-top:0">Como ler o fluxograma</h3>
+    <ol class="comoList">
+      <li><span class="num">1</span><span>O laço se repete duas vezes: primeiro a variação do caminho feliz (CT-LOGIN-001), depois o caso autoral de erro.</span></li>
+      <li><span class="num">2</span><span>O caso autoral de erro não pode ser "senha inválida" — escolham outro cenário (e-mail não cadastrado, campos vazios, etc.).</span></li>
+      <li><span class="num">3</span><span>"Resultado esperado" precisa ser verificável na tela — não escrevam algo como "o login funciona".</span></li>
+      <li><span class="num">4</span><span>As perguntas de consolidação vêm depois dos dois casos, não durante o laço.</span></li>
+    </ol>
+  </div>
 </section>
 <section class="tab" id="relatorio-tab" role="tabpanel" hidden>
   <section>

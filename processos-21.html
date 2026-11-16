@@ -333,7 +333,7 @@ section.tab{display:flex;flex-direction:column;gap:16px}
 <section class="tab" id="como" role="tabpanel">
   <section>
     <div class="sec-head"><span class="n">ATIVIDADE PROPOSTA</span><h2>O que vocês vão resolver</h2></div>
-    <p class="lead" style="color:var(--ink);font-size:15.5px">Vocês vão atuar como consultores de uma equipe de desenvolvimento. Primeiro, analisam um processo de deploy sem automação e sem monitoramento, propondo melhorias com base nos pilares do DevOps (CALMS). Depois, calculam as quatro métricas DORA de uma equipe fictícia e escrevem uma recomendação técnica.</p>
+    <p class="lead" style="color:var(--ink);font-size:15.5px">Vocês vão atuar como consultores de uma equipe de desenvolvimento. Primeiro, analisam um processo de deploy sem automação e sem monitoramento, propondo melhorias com base nos pilares do DevOps (CALMS). Depois, simulam o pipeline de um sistema financeiro com um bug na função de soma, decidindo em que etapa ele seria barrado antes de chegar ao cliente.</p>
     <p class="muted">Base: apostila, Capítulo 21 (Cultura DevOps e feedback contínuo).</p>
   </section>
 
@@ -343,8 +343,8 @@ section.tab{display:flex;flex-direction:column;gap:16px}
       <li><span class="tick">✓</span><span>Mapear a evolução do wall of confusion até as práticas CALMS (culture, automation, lean, measurement e sharing).</span></li>
       <li><span class="tick">✓</span><span>Identificar gargalos de fluxo num processo sem automação e propor melhorias baseadas nos pilares CALMS.</span></li>
       <li><span class="tick">✓</span><span>Configurar, em conceito, um pipeline de feedback rápido (build, test e monitor).</span></li>
-      <li><span class="tick">✓</span><span>Calcular lead time, deployment frequency, MTTR e change fail rate (métricas DORA) a partir de dados reais de uma equipe.</span></li>
-      <li><span class="tick">✓</span><span>Interpretar métricas DORA para priorizar uma melhoria e justificar uma recomendação técnica.</span></li>
+      <li><span class="tick">✓</span><span>Simular um pipeline de integração contínua (entrada → build → teste → resultado) e identificar em que etapa uma falha seria detectada.</span></li>
+      <li><span class="tick">✓</span><span>Interpretar o status de um pipeline (build e teste) e decidir, com justificativa técnica, se um deploy pode ser realizado.</span></li>
     </ul>
   </section>
 
@@ -391,10 +391,10 @@ section.tab{display:flex;flex-direction:column;gap:16px}
 </section>
     </section>
 <section class="tab" id="fluxograma" role="tabpanel" hidden>
-  <div class="sec-head"><span class="n">FLUXOGRAMA</span><h2>Do diagnóstico à recomendação</h2></div>
-  <p class="lead">O fluxograma mostra a ordem da atividade: primeiro o desafio CALMS (processo sem automação), depois o diagnóstico DORA (equipe real) e a recomendação final.</p>
+  <div class="sec-head"><span class="n">FLUXOGRAMA</span><h2>Do diagnóstico CALMS à decisão técnica</h2></div>
+  <p class="lead">O fluxograma mostra a ordem da atividade: primeiro o desafio CALMS (processo sem automação), depois a simulação de pipeline (esteira, falha e decisão de deploy).</p>
   <div class="visual">
-    <svg viewBox="0 0 640 456" class="sv" role="img" aria-label="Fluxograma da atividade: início; identificar gargalos e risco do processo sem automação; propor melhoria com base no CALMS; desenhar um pipeline simples; calcular as quatro métricas DORA da equipe; responder as perguntas de priorização; escrever a recomendação técnica; fim">
+    <svg viewBox="0 0 640 396" class="sv" role="img" aria-label="Fluxograma da atividade: início; identificar gargalos e risco do processo sem automação; propor melhoria com base no CALMS; desenhar a esteira, entrada, build, teste, resultado; identificar em que etapa a falha seria detectada; decidir se o time pode fazer o deploy; fim">
       <defs>
         <marker id="fp21-head" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
           <path d="M0,0 L9,4.5 L0,9 z" class="sv-headfill"/>
@@ -415,37 +415,32 @@ section.tab{display:flex;flex-direction:column;gap:16px}
       <path d="M200 160 L200 174" class="sv-arrow" marker-end="url(#fp21-head)"/>
 
       <rect x="60" y="174" width="280" height="46" rx="8" class="sv-box"/>
-      <text x="200" y="193" class="sv-label sv-small">Desenhar um pipeline simples</text>
-      <text x="200" y="210" class="sv-label sv-small">(build → test → monitor)</text>
+      <text x="200" y="193" class="sv-label sv-small">Desenhar a esteira: entrada →</text>
+      <text x="200" y="210" class="sv-label sv-small">build → teste → resultado (Passo 2)</text>
       <path d="M200 220 L200 234" class="sv-arrow" marker-end="url(#fp21-head)"/>
 
       <rect x="60" y="234" width="280" height="46" rx="8" class="sv-box"/>
-      <text x="200" y="253" class="sv-label sv-small">Calcular as 4 métricas DORA</text>
-      <text x="200" y="270" class="sv-label sv-small">da equipe (Passo 2)</text>
+      <text x="200" y="253" class="sv-label sv-small">Identificar em que etapa a falha</text>
+      <text x="200" y="270" class="sv-label sv-small">seria detectada (Passo 3)</text>
       <path d="M200 280 L200 294" class="sv-arrow" marker-end="url(#fp21-head)"/>
 
       <rect x="60" y="294" width="280" height="46" rx="8" class="sv-box"/>
-      <text x="200" y="313" class="sv-label sv-small">Responder as perguntas de</text>
-      <text x="200" y="330" class="sv-label sv-small">priorização (Passo 3)</text>
+      <text x="200" y="313" class="sv-label sv-small">Decidir se o time pode fazer</text>
+      <text x="200" y="330" class="sv-label sv-small">o deploy (Passo 4)</text>
       <path d="M200 340 L200 354" class="sv-arrow" marker-end="url(#fp21-head)"/>
 
-      <rect x="60" y="354" width="280" height="46" rx="8" class="sv-box"/>
-      <text x="200" y="373" class="sv-label sv-small">Escrever a recomendação</text>
-      <text x="200" y="390" class="sv-label sv-small">técnica (Passo 4)</text>
-      <path d="M200 400 L200 414" class="sv-arrow" marker-end="url(#fp21-head)"/>
-
-      <rect x="100" y="414" width="200" height="32" rx="16" class="sv-box-ok"/>
-      <text x="200" y="435" class="sv-label sv-small">FIM</text>
+      <rect x="100" y="354" width="200" height="32" rx="16" class="sv-box-ok"/>
+      <text x="200" y="375" class="sv-label sv-small">FIM</text>
     </svg>
-    <div class="cap">Os dois desafios usam o mesmo raciocínio: olhar o processo (CALMS) e os números (DORA) antes de decidir o que priorizar.</div>
+    <div class="cap">A esteira (Passo 2) é a mesma do diagrama Build/Test/Monitor da aba Como fazer — agora aplicada a um erro específico.</div>
   </div>
   <div class="comoBox">
     <h3 style="margin-top:0">Como ler o fluxograma</h3>
     <ol class="comoList">
       <li><span class="num">1</span><span>O desafio CALMS (Passo 1) é sobre um processo sem automação — os gargalos já estão descritos no próprio cenário, a tarefa é explicar por que cada um é um problema.</span></li>
-      <li><span class="num">2</span><span>O diagnóstico DORA (Passo 2) usa os registros de deploy de uma equipe diferente — calculem as 4 métricas a partir dos dados da tabela, não do exemplo do Como fazer.</span></li>
-      <li><span class="num">3</span><span>As perguntas de priorização (Passo 3) pedem para escolher UMA métrica e UMA melhoria — não é para resolver tudo de uma vez.</span></li>
-      <li><span class="num">4</span><span>A recomendação técnica (Passo 4) só faz sentido depois do diagnóstico: ela precisa citar o número que a justifica.</span></li>
+      <li><span class="num">2</span><span>A esteira do Passo 2 segue o molde Entrada → Build → Teste → Resultado — o erro da soma é um exemplo para aplicar esse molde, não para resolver o bug em si.</span></li>
+      <li><span class="num">3</span><span>O Passo 3 pede a etapa e o porquê — não basta dizer "no teste", expliquem o que nessa etapa detectaria esse tipo de erro.</span></li>
+      <li><span class="num">4</span><span>A decisão do Passo 4 usa o status já dado (build OK, teste FALHA) — a justificativa deve se basear no papel de cada etapa, não em inventar um novo status.</span></li>
     </ol>
   </div>
 </section>
@@ -474,53 +469,44 @@ section.tab{display:flex;flex-direction:column;gap:16px}
 <div class="campoWrap" data-rel="campo" data-rotulo="Gargalo 2"><label class="f" for="c2">Gargalo 2</label><input type="text" id="c2" data-campo="c2" placeholder=""></div>
 <div class="campoWrap" data-rel="campo" data-rotulo="Risco grave desse processo"><label class="f" for="c3">Risco grave desse processo</label><textarea id="c3" data-campo="c3" rows="3"></textarea></div>
 <div class="campoWrap" data-rel="campo" data-rotulo="Melhoria proposta, com a letra do CALMS usada"><label class="f" for="c4">Melhoria proposta, com a letra do CALMS usada</label><textarea id="c4" data-campo="c4" rows="3"></textarea></div>
-<div class="campoWrap" data-rel="campo" data-rotulo="Pipeline simples proposto (build, test, monitor)"><label class="f" for="c5">Pipeline simples proposto (build, test, monitor)</label><textarea id="c5" data-campo="c5" rows="3" placeholder="Build: ... Test: ... Monitor: ..."></textarea></div>
     </div>
     <div class="passo">
       <div class="passo-top">
         <span class="passo-num">2</span>
-        <div class="passo-txt">Diagnóstico DORA <span class="desc">A equipe Alfa registrou os deploys do mês de outubro.</span></div>
+        <div class="passo-txt">Simulação de pipeline — desenhar o fluxo <span class="desc">Cenário: vocês fazem parte de uma equipe de tecnologia em um sistema financeiro. Uma alteração foi feita na função de soma do sistema, mas há um erro lógico: ao somar 2 + 2, o resultado está sendo 5. A missão é montar a lógica do pipeline para impedir que esse erro chegue ao cliente.</span></div>
       </div>
-      <div class="dica"><b>Como pensar:</b> Lead time é a média dos tempos de cada entrega. Deployment frequency é quantos deploys aconteceram no período. MTTR é o tempo de recuperação só dos deploys que tiveram falha. Change fail rate é falhas ÷ total de deploys × 100.</div>
-      <div class="campoWrap"><div class="modelo">Deploy 1 — 05/10 — tempo do código pronto ao deploy: 2 dias — sem falha
-Deploy 2 — 12/10 — tempo do código pronto ao deploy: 1 dia — sem falha
-Deploy 3 — 18/10 — tempo do código pronto ao deploy: 3 dias — causou falha (corrigida em 6 horas)
-Deploy 4 — 26/10 — tempo do código pronto ao deploy: 2 dias — sem falha</div></div>
-      <div class="campoWrap" data-rel="campo" data-rotulo="Lead time (médio, em dias)"><label class="f" for="c6">Lead time (médio, em dias)</label><input type="text" id="c6" data-campo="c6" placeholder=""></div>
-<div class="campoWrap" data-rel="campo" data-rotulo="Deployment frequency (no mês)"><label class="f" for="c7">Deployment frequency (no mês)</label><input type="text" id="c7" data-campo="c7" placeholder=""></div>
-<div class="campoWrap" data-rel="campo" data-rotulo="MTTR (em horas)"><label class="f" for="c8">MTTR (em horas)</label><input type="text" id="c8" data-campo="c8" placeholder=""></div>
-<div class="campoWrap" data-rel="campo" data-rotulo="Change fail rate (em %)"><label class="f" for="c9">Change fail rate (em %)</label><input type="text" id="c9" data-campo="c9" placeholder=""></div>
+      <div class="dica"><b>Como pensar:</b> Sigam o modelo: Entrada (commit/push do código) → Bloco 1, build (compilação e preparação da versão) → Bloco 2, teste (testes automatizados) → Bloco 3, resultado (monitoramento e alerta de sucesso ou erro).</div>
+      <div class="campoWrap" data-rel="campo" data-rotulo="Desenho ou descrição da esteira (entrada → build → teste → resultado)"><label class="f" for="c5">Desenho ou descrição da esteira (entrada → build → teste → resultado)</label><textarea id="c5" data-campo="c5" rows="4" placeholder="Entrada: ... Bloco 1 (build): ... Bloco 2 (teste): ... Bloco 3 (resultado): ..."></textarea></div>
     </div>
     <div class="passo">
       <div class="passo-top">
         <span class="passo-num">3</span>
-        <div class="passo-txt">Perguntas de priorização</div>
+        <div class="passo-txt">Simulação de pipeline — identificando a falha</div>
       </div>
 
-      <div class="campoWrap" data-rel="campo" data-rotulo="Qual das 4 métricas indica o maior risco para o negócio da equipe Alfa, e por quê?"><label class="f" for="c10">Qual das 4 métricas indica o maior risco para o negócio da equipe Alfa, e por quê?</label><textarea id="c10" data-campo="c10" rows="4"></textarea></div>
-<div class="campoWrap" data-rel="campo" data-rotulo="Se a equipe só pudesse fazer UMA melhoria agora, qual pilar do CALMS ela usaria primeiro?"><label class="f" for="c11">Se a equipe só pudesse fazer UMA melhoria agora, qual pilar do CALMS ela usaria primeiro?</label><textarea id="c11" data-campo="c11" rows="4"></textarea></div>
+      <div class="campoWrap" data-rel="campo" data-rotulo="Em qual etapa do pipeline o erro da soma (2+2=5) seria detectado? Por quê?"><label class="f" for="c6">Em qual etapa do pipeline o erro da soma (2+2=5) seria detectado? Por quê?</label><textarea id="c6" data-campo="c6" rows="4"></textarea></div>
     </div>
     <div class="passo">
       <div class="passo-top">
         <span class="passo-num">4</span>
-        <div class="passo-txt">Recomendação técnica <span class="desc">Escrevam um parágrafo final ligando o diagnóstico DORA à causa raiz no processo.</span></div>
+        <div class="passo-txt">Simulação de pipeline — interpretação e decisão técnica <span class="desc">Status do pipeline: build = OK (sucesso); teste = FALHA (erro na função soma).</span></div>
       </div>
 
-      <div class="campoWrap" data-rel="campo" data-rotulo="Recomendação técnica"><label class="f" for="c12">Recomendação técnica</label><textarea id="c12" data-campo="c12" rows="5"></textarea></div>
+      <div class="campoWrap" data-rel="campo" data-rotulo="Com base nos conceitos de DevOps, o time pode realizar o deploy desse sistema para o cliente? Justifique."><label class="f" for="c7">Com base nos conceitos de DevOps, o time pode realizar o deploy desse sistema para o cliente? Justifique.</label><textarea id="c7" data-campo="c7" rows="4"></textarea></div>
     </div>
   </section>
 
   <section>
     <div class="sec-head"><span class="n">CONFIRA</span><h2>Checklist antes de gerar o PDF</h2></div>
     <div class="progresso" id="progresso"></div>
-    <label class="check"><input type="checkbox" data-check="0"><span>Identificação (escola, turma, grupo, integrantes, professor(a), data) preenchida.</span></label><label class="check"><input type="checkbox" data-check="1"><span>Os 2 gargalos, o risco e a melhoria CALMS do Desafio 1 estão completos, com o pipeline simples descrito.</span></label><label class="check"><input type="checkbox" data-check="2"><span>As 4 métricas DORA foram calculadas a partir da tabela de deploys.</span></label><label class="check"><input type="checkbox" data-check="3"><span>As perguntas de priorização e a recomendação técnica foram respondidas.</span></label><label class="check"><input type="checkbox" data-check="4"><span>PDF gerado e enviado no AVA com o grupo identificado.</span></label>
+    <label class="check"><input type="checkbox" data-check="0"><span>Identificação (escola, turma, grupo, integrantes, professor(a), data) preenchida.</span></label><label class="check"><input type="checkbox" data-check="1"><span>Os 2 gargalos, o risco e a melhoria CALMS do Desafio 1 estão completos.</span></label><label class="check"><input type="checkbox" data-check="2"><span>A esteira (entrada → build → teste → resultado) foi desenhada ou descrita.</span></label><label class="check"><input type="checkbox" data-check="3"><span>A etapa que detecta a falha e a decisão sobre o deploy foram respondidas e justificadas.</span></label><label class="check"><input type="checkbox" data-check="4"><span>PDF gerado e enviado no AVA com o grupo identificado.</span></label>
   </section>
 
   <section>
     <div class="sec-head"><span class="n">AVALIAÇÃO</span><h2>Como esta atividade será avaliada</h2></div>
     <div class="tabWrap"><table class="criterios">
       <thead><tr><th>Critério</th><th>Pontos</th></tr></thead>
-      <tbody><tr><td>Gargalos, risco e melhoria CALMS coerentes com o cenário sem automação</td><td>0,2</td></tr><tr><td>Pipeline simples (build/test/monitor) descrito corretamente</td><td>0,2</td></tr><tr><td>As 4 métricas DORA calculadas corretamente a partir da tabela</td><td>0,2</td></tr><tr><td>Perguntas de priorização respondidas com justificativa baseada nos números</td><td>0,2</td></tr><tr><td>Recomendação técnica clara, ligada ao diagnóstico; entregue em PDF no AVA</td><td>0,2</td></tr></tbody>
+      <tbody><tr><td>Gargalos, risco e melhoria CALMS coerentes com o cenário sem automação</td><td>0,3</td></tr><tr><td>Esteira desenhada corretamente (entrada → build → teste → resultado)</td><td>0,3</td></tr><tr><td>Etapa da falha identificada e justificada corretamente</td><td>0,2</td></tr><tr><td>Decisão sobre o deploy coerente com os conceitos de DevOps; entregue em PDF no AVA</td><td>0,2</td></tr></tbody>
     </table></div>
   </section>
 
@@ -580,10 +566,10 @@ Deploy 4 — 26/10 — tempo do código pronto ao deploy: 2 dias — sem falha</
     <div class="rlinha"><b>Base teórica:</b> Capítulo 21 — Cultura DevOps e feedback contínuo (wall of confusion, CALMS, pipeline de feedback, métricas DORA)</div>
 
     <h3>Objetivos</h3>
-    <ul class="lista-obj"><li>Mapear a evolução do wall of confusion até as práticas CALMS (culture, automation, lean, measurement e sharing).</li><li>Identificar gargalos de fluxo num processo sem automação e propor melhorias baseadas nos pilares CALMS.</li><li>Configurar, em conceito, um pipeline de feedback rápido (build, test e monitor).</li><li>Calcular lead time, deployment frequency, MTTR e change fail rate (métricas DORA) a partir de dados reais de uma equipe.</li><li>Interpretar métricas DORA para priorizar uma melhoria e justificar uma recomendação técnica.</li></ul>
+    <ul class="lista-obj"><li>Mapear a evolução do wall of confusion até as práticas CALMS (culture, automation, lean, measurement e sharing).</li><li>Identificar gargalos de fluxo num processo sem automação e propor melhorias baseadas nos pilares CALMS.</li><li>Configurar, em conceito, um pipeline de feedback rápido (build, test e monitor).</li><li>Simular um pipeline de integração contínua (entrada → build → teste → resultado) e identificar em que etapa uma falha seria detectada.</li><li>Interpretar o status de um pipeline (build e teste) e decidir, com justificativa técnica, se um deploy pode ser realizado.</li></ul>
 
     <h3>Procedimento / Atividade</h3>
-    <p><b>Atividade proposta:</b> o grupo atua como consultor de uma equipe de desenvolvimento. Primeiro analisa um processo de deploy sem automação e sem monitoramento, propondo melhorias com base no CALMS. Depois calcula as quatro métricas DORA de uma equipe fictícia e escreve uma recomendação técnica.</p>
+    <p><b>Atividade proposta:</b> o grupo atua como consultor de uma equipe de desenvolvimento. Primeiro analisa um processo de deploy sem automação e sem monitoramento, propondo melhorias com base no CALMS. Depois simula o pipeline de um sistema financeiro com um bug na função de soma, decidindo em que etapa ele seria barrado antes de chegar ao cliente.</p>
 
     <h3>Procedimentos para a realização da atividade</h3>
     <div id="corpoRoteiro"></div>

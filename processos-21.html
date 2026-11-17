@@ -333,7 +333,7 @@ section.tab{display:flex;flex-direction:column;gap:16px}
 <section class="tab" id="como" role="tabpanel">
   <section>
     <div class="sec-head"><span class="n">ATIVIDADE PROPOSTA</span><h2>O que vocês vão resolver</h2></div>
-    <p class="lead" style="color:var(--ink);font-size:15.5px">Vocês vão atuar como consultores de uma equipe de desenvolvimento. Primeiro, analisam um processo de deploy sem automação e sem monitoramento, propondo melhorias com base nos pilares do DevOps (CALMS). Depois, simulam o pipeline de um sistema financeiro com um bug na função de soma, decidindo em que etapa ele seria barrado antes de chegar ao cliente.</p>
+    <p class="lead" style="color:var(--ink);font-size:15.5px">Vocês vão atuar como consultores de uma equipe de desenvolvimento. Primeiro, analisam um processo de deploy sem automação e sem monitoramento, propondo melhorias com base nos pilares do DevOps (CALMS). Depois, simulam o pipeline de um sistema financeiro com um bug na função de soma, decidindo em que etapa ele seria barrado antes de chegar ao cliente. Por fim, calculam métricas reais de DORA (lead time, frequência de deploy, MTTR e change fail rate) a partir de dados de duas semanas, diagnosticam o maior gargalo do time e propõem uma recomendação técnica.</p>
     <p class="muted">Base: apostila, Capítulo 21 (Cultura DevOps e feedback contínuo).</p>
   </section>
 
@@ -345,6 +345,8 @@ section.tab{display:flex;flex-direction:column;gap:16px}
       <li><span class="tick">✓</span><span>Configurar, em conceito, um pipeline de feedback rápido (build, test e monitor).</span></li>
       <li><span class="tick">✓</span><span>Simular um pipeline de integração contínua (entrada → build → teste → resultado) e identificar em que etapa uma falha seria detectada.</span></li>
       <li><span class="tick">✓</span><span>Interpretar o status de um pipeline (build e teste) e decidir, com justificativa técnica, se um deploy pode ser realizado.</span></li>
+      <li><span class="tick">✓</span><span>Calcular métricas DORA (lead time, deployment frequency, MTTR e change fail rate) a partir de dados reais de commits, deploys e incidentes.</span></li>
+      <li><span class="tick">✓</span><span>Diagnosticar o gargalo mais crítico do time (velocidade x estabilidade) e propor uma recomendação técnica priorizada.</span></li>
     </ul>
   </section>
 
@@ -391,10 +393,10 @@ section.tab{display:flex;flex-direction:column;gap:16px}
 </section>
     </section>
 <section class="tab" id="fluxograma" role="tabpanel" hidden>
-  <div class="sec-head"><span class="n">FLUXOGRAMA</span><h2>Do diagnóstico CALMS à decisão técnica</h2></div>
-  <p class="lead">O fluxograma mostra a ordem da atividade: primeiro o desafio CALMS (processo sem automação), depois a simulação de pipeline (esteira, falha e decisão de deploy).</p>
+  <div class="sec-head"><span class="n">FLUXOGRAMA</span><h2>Do diagnóstico CALMS ao plano de ação com métricas DORA</h2></div>
+  <p class="lead">O fluxograma mostra a ordem da atividade: desafio CALMS (processo sem automação), simulação de pipeline (esteira, falha e decisão de deploy) e diagnóstico DORA (quadro de indicadores, gargalo e recomendação).</p>
   <div class="visual">
-    <svg viewBox="0 0 640 396" class="sv" role="img" aria-label="Fluxograma da atividade: início; identificar gargalos e risco do processo sem automação; propor melhoria com base no CALMS; desenhar a esteira, entrada, build, teste, resultado; identificar em que etapa a falha seria detectada; decidir se o time pode fazer o deploy; fim">
+    <svg viewBox="0 0 640 586" class="sv" role="img" aria-label="Fluxograma da atividade: início; identificar gargalos e risco do processo sem automação; propor melhoria com base no CALMS; desenhar a esteira, entrada, build, teste, resultado; identificar em que etapa a falha seria detectada; decidir se o time pode fazer o deploy; calcular as métricas DORA do período; diagnosticar o gargalo da equipe; propor uma recomendação técnica; fim">
       <defs>
         <marker id="fp21-head" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
           <path d="M0,0 L9,4.5 L0,9 z" class="sv-headfill"/>
@@ -429,10 +431,26 @@ section.tab{display:flex;flex-direction:column;gap:16px}
       <text x="200" y="330" class="sv-label sv-small">o deploy (Passo 4)</text>
       <path d="M200 340 L200 354" class="sv-arrow" marker-end="url(#fp21-head)"/>
 
-      <rect x="100" y="354" width="200" height="32" rx="16" class="sv-box-ok"/>
-      <text x="200" y="375" class="sv-label sv-small">FIM</text>
+      <rect x="60" y="354" width="280" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="373" class="sv-label sv-small">Calcular as métricas DORA</text>
+      <text x="200" y="390" class="sv-label sv-small">do período (Passo 5)</text>
+      <path d="M200 400 L200 414" class="sv-arrow" marker-end="url(#fp21-head)"/>
+
+      <rect x="60" y="414" width="280" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="433" class="sv-label sv-small">Diagnosticar o gargalo</text>
+      <text x="200" y="450" class="sv-label sv-small">da equipe (Passo 6)</text>
+      <path d="M200 460 L200 474" class="sv-arrow" marker-end="url(#fp21-head)"/>
+
+      <rect x="60" y="474" width="280" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="493" class="sv-label sv-small">Propor uma recomendação</text>
+      <text x="200" y="510" class="sv-label sv-small">técnica (Passo 7)</text>
+      <path d="M200 520 L200 534" class="sv-arrow" marker-end="url(#fp21-head)"/>
+
+      <rect x="100" y="534" width="200" height="32" rx="16" class="sv-box-ok"/>
+      <text x="200" y="555" class="sv-label sv-small">FIM</text>
     </svg>
     <div class="cap">A esteira (Passo 2) é a mesma do diagrama Build/Test/Monitor da aba Como fazer — agora aplicada a um erro específico.</div>
+    <div class="cap">As métricas do Passo 5 (DORA) são as mesmas definidas no terceiro diagrama da aba Como fazer — aqui vocês aplicam as fórmulas aos dados do cenário.</div>
   </div>
   <div class="comoBox">
     <h3 style="margin-top:0">Como ler o fluxograma</h3>
@@ -441,6 +459,9 @@ section.tab{display:flex;flex-direction:column;gap:16px}
       <li><span class="num">2</span><span>A esteira do Passo 2 segue o molde Entrada → Build → Teste → Resultado — o erro da soma é um exemplo para aplicar esse molde, não para resolver o bug em si.</span></li>
       <li><span class="num">3</span><span>O Passo 3 pede a etapa e o porquê — não basta dizer "no teste", expliquem o que nessa etapa detectaria esse tipo de erro.</span></li>
       <li><span class="num">4</span><span>A decisão do Passo 4 usa o status já dado (build OK, teste FALHA) — a justificativa deve se basear no papel de cada etapa, não em inventar um novo status.</span></li>
+      <li><span class="num">5</span><span>O Passo 5 pede para aplicarem as fórmulas de Lead Time, Frequência, MTTR e Change Fail Rate (definidas na aba Como fazer) aos dados do cenário — mostrem a memória de cálculo, não só o resultado.</span></li>
+      <li><span class="num">6</span><span>O Passo 6 compara dois lados: lead time + frequência (velocidade) contra MTTR + change fail rate (estabilidade) — usem os números que vocês mesmos calcularam para decidir qual lado pesa mais.</span></li>
+      <li><span class="num">7</span><span>O Passo 7 pede uma recomendação de uma frase só, ligada à métrica que vocês apontaram como mais crítica no Passo 6 — não é hora de listar várias ações.</span></li>
     </ol>
   </div>
 </section>
@@ -494,19 +515,65 @@ section.tab{display:flex;flex-direction:column;gap:16px}
 
       <div class="campoWrap" data-rel="campo" data-rotulo="Com base nos conceitos de DevOps, o time pode realizar o deploy desse sistema para o cliente? Justifique."><label class="f" for="c7">Com base nos conceitos de DevOps, o time pode realizar o deploy desse sistema para o cliente? Justifique.</label><textarea id="c7" data-campo="c7" rows="4"></textarea></div>
     </div>
+    <div class="passo">
+      <div class="passo-top">
+        <span class="passo-num">5</span>
+        <div class="passo-txt">Diagnóstico DORA — quadro de indicadores <span class="desc">Cenário: sua equipe começou a praticar integração contínua e deploys frequentes, mas ainda há dúvidas sobre onde estão os maiores problemas. Analisem os dados de duas semanas abaixo e preencham o quadro para gerar um diagnóstico técnico.</span></div>
+      </div>
+      <div class="dica"><b>Como pensar:</b> Para o Lead Time, calculem o tempo entre o commit e o deploy de cada funcionalidade e tirem a média das duas. Para o MTTR, façam o mesmo com os dois incidentes. A frequência de deploy considera o total de deploys no período informado. O change fail rate é a proporção de deploys que causaram falha.</div>
+      <div class="campoWrap" data-rel="tabela" data-rotulo="Dados para o cálculo (fornecidos pelo cenário)">
+        <div class="tabWrap"><table>
+          <tbody>
+            <tr><td class="fix">Fluxo de deploy</td><td>Funcionalidade A: commit em 01/04 (09h) → deploy em 03/04 (15h).<br>Funcionalidade B: commit em 02/04 (14h) → deploy em 04/04 (10h).</td></tr>
+            <tr><td class="fix">Frequência</td><td>8 deploys totais realizados no período.</td></tr>
+            <tr><td class="fix">Incidentes</td><td>Incidente 1: resolvido em 2 horas. Incidente 2: resolvido em 3 horas.</td></tr>
+            <tr><td class="fix">Falhas</td><td>2 dos 8 deploys causaram erros críticos em produção.</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+      <div class="campoWrap" data-rel="tabela" data-rotulo="Quadro de indicadores DORA">
+        <div class="tabWrap"><table>
+          <thead><tr><th>Métrica DORA</th><th>Memória de cálculo</th><th>Resultado final</th></tr></thead>
+          <tbody>
+            <tr><td class="fix">Lead Time Médio</td><td><input type="text" id="c8" data-campo="c8"></td><td><input type="text" id="c9" data-campo="c9"></td></tr>
+            <tr><td class="fix">Frequência de Deploy</td><td><input type="text" id="c10" data-campo="c10"></td><td><input type="text" id="c11" data-campo="c11"></td></tr>
+            <tr><td class="fix">MTTR (Recuperação)</td><td><input type="text" id="c12" data-campo="c12"></td><td><input type="text" id="c13" data-campo="c13"></td></tr>
+            <tr><td class="fix">Change Fail Rate</td><td><input type="text" id="c14" data-campo="c14"></td><td><input type="text" id="c15" data-campo="c15"></td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </div>
+    <div class="passo">
+      <div class="passo-top">
+        <span class="passo-num">6</span>
+        <div class="passo-txt">Diagnóstico DORA — análise e diagnóstico</div>
+      </div>
+      <div class="dica"><b>Como pensar:</b> Comparem os dois lados dos números: lead time e frequência falam de velocidade; MTTR e change fail rate falam de estabilidade. Usem os valores que vocês calcularam no Passo 5 para sustentar a resposta.</div>
+      <div class="campoWrap" data-rel="campo" data-rotulo="Gargalo principal: o maior risco atual da equipe está na velocidade (demora para entregar) ou na estabilidade (risco de falhas e tempo de conserto)? Justifique usando os dados."><label class="f" for="c16">Gargalo principal: o maior risco atual da equipe está na velocidade (demora para entregar) ou na estabilidade (risco de falhas e tempo de conserto)? Justifique usando os dados.</label><textarea id="c16" data-campo="c16" rows="4"></textarea></div>
+      <div class="campoWrap" data-rel="campo" data-rotulo="Impacto no negócio: se o change fail rate continuar neste nível, o que pode acontecer com a confiança do cliente no sistema?"><label class="f" for="c17">Impacto no negócio: se o change fail rate continuar neste nível, o que pode acontecer com a confiança do cliente no sistema?</label><textarea id="c17" data-campo="c17" rows="3"></textarea></div>
+      <div class="campoWrap" data-rel="campo" data-rotulo="Melhoria técnica: como a implementação de testes automatizados no pipeline poderia ajudar a melhorar especificamente o indicador de estabilidade da equipe?"><label class="f" for="c18">Melhoria técnica: como a implementação de testes automatizados no pipeline poderia ajudar a melhorar especificamente o indicador de estabilidade da equipe?</label><textarea id="c18" data-campo="c18" rows="3"></textarea></div>
+    </div>
+    <div class="passo">
+      <div class="passo-top">
+        <span class="passo-num">7</span>
+        <div class="passo-txt">Diagnóstico DORA — plano de ação</div>
+      </div>
+      <div class="dica"><b>Como pensar:</b> A recomendação deve apontar uma ação concreta ligada à métrica que vocês identificaram como mais crítica no Passo 6 — uma frase só, sem listar várias ações.</div>
+      <div class="campoWrap" data-rel="campo" data-rotulo="Recomendação técnica de uma frase para o time de engenharia, priorizando a métrica mais crítica identificada"><label class="f" for="c19">Recomendação técnica de uma frase para o time de engenharia, priorizando a métrica mais crítica identificada</label><textarea id="c19" data-campo="c19" rows="3"></textarea></div>
+    </div>
   </section>
 
   <section>
     <div class="sec-head"><span class="n">CONFIRA</span><h2>Checklist antes de gerar o PDF</h2></div>
     <div class="progresso" id="progresso"></div>
-    <label class="check"><input type="checkbox" data-check="0"><span>Identificação (escola, turma, grupo, integrantes, professor(a), data) preenchida.</span></label><label class="check"><input type="checkbox" data-check="1"><span>Os 2 gargalos, o risco e a melhoria CALMS do Desafio 1 estão completos.</span></label><label class="check"><input type="checkbox" data-check="2"><span>A esteira (entrada → build → teste → resultado) foi desenhada ou descrita.</span></label><label class="check"><input type="checkbox" data-check="3"><span>A etapa que detecta a falha e a decisão sobre o deploy foram respondidas e justificadas.</span></label><label class="check"><input type="checkbox" data-check="4"><span>PDF gerado e enviado no AVA com o grupo identificado.</span></label>
+    <label class="check"><input type="checkbox" data-check="0"><span>Identificação (escola, turma, grupo, integrantes, professor(a), data) preenchida.</span></label><label class="check"><input type="checkbox" data-check="1"><span>Os 2 gargalos, o risco e a melhoria CALMS do Desafio 1 estão completos.</span></label><label class="check"><input type="checkbox" data-check="2"><span>A esteira (entrada → build → teste → resultado) foi desenhada ou descrita.</span></label><label class="check"><input type="checkbox" data-check="3"><span>A etapa que detecta a falha e a decisão sobre o deploy foram respondidas e justificadas.</span></label><label class="check"><input type="checkbox" data-check="4"><span>O quadro de indicadores DORA (lead time, frequência, MTTR, change fail rate) foi calculado com a memória de cálculo.</span></label><label class="check"><input type="checkbox" data-check="5"><span>As perguntas de diagnóstico (gargalo principal, impacto no negócio, melhoria técnica) foram respondidas.</span></label><label class="check"><input type="checkbox" data-check="6"><span>A recomendação técnica do plano de ação foi escrita.</span></label><label class="check"><input type="checkbox" data-check="7"><span>PDF gerado e enviado no AVA com o grupo identificado.</span></label>
   </section>
 
   <section>
     <div class="sec-head"><span class="n">AVALIAÇÃO</span><h2>Como esta atividade será avaliada</h2></div>
     <div class="tabWrap"><table class="criterios">
       <thead><tr><th>Critério</th><th>Pontos</th></tr></thead>
-      <tbody><tr><td>Gargalos, risco e melhoria CALMS coerentes com o cenário sem automação</td><td>0,3</td></tr><tr><td>Esteira desenhada corretamente (entrada → build → teste → resultado)</td><td>0,3</td></tr><tr><td>Etapa da falha identificada e justificada corretamente</td><td>0,2</td></tr><tr><td>Decisão sobre o deploy coerente com os conceitos de DevOps; entregue em PDF no AVA</td><td>0,2</td></tr></tbody>
+      <tbody><tr><td>Gargalos, risco e melhoria CALMS coerentes com o cenário sem automação</td><td>0,15</td></tr><tr><td>Esteira desenhada corretamente (entrada → build → teste → resultado)</td><td>0,15</td></tr><tr><td>Etapa da falha identificada e justificada corretamente</td><td>0,1</td></tr><tr><td>Decisão sobre o deploy coerente com os conceitos de DevOps</td><td>0,1</td></tr><tr><td>Quadro de indicadores DORA calculado corretamente, com memória de cálculo</td><td>0,2</td></tr><tr><td>Perguntas de diagnóstico respondidas com base nos números calculados</td><td>0,2</td></tr><tr><td>Recomendação técnica coerente com o gargalo identificado; entregue em PDF no AVA</td><td>0,1</td></tr></tbody>
     </table></div>
   </section>
 
@@ -566,10 +633,10 @@ section.tab{display:flex;flex-direction:column;gap:16px}
     <div class="rlinha"><b>Base teórica:</b> Capítulo 21 — Cultura DevOps e feedback contínuo (wall of confusion, CALMS, pipeline de feedback, métricas DORA)</div>
 
     <h3>Objetivos</h3>
-    <ul class="lista-obj"><li>Mapear a evolução do wall of confusion até as práticas CALMS (culture, automation, lean, measurement e sharing).</li><li>Identificar gargalos de fluxo num processo sem automação e propor melhorias baseadas nos pilares CALMS.</li><li>Configurar, em conceito, um pipeline de feedback rápido (build, test e monitor).</li><li>Simular um pipeline de integração contínua (entrada → build → teste → resultado) e identificar em que etapa uma falha seria detectada.</li><li>Interpretar o status de um pipeline (build e teste) e decidir, com justificativa técnica, se um deploy pode ser realizado.</li></ul>
+    <ul class="lista-obj"><li>Mapear a evolução do wall of confusion até as práticas CALMS (culture, automation, lean, measurement e sharing).</li><li>Identificar gargalos de fluxo num processo sem automação e propor melhorias baseadas nos pilares CALMS.</li><li>Configurar, em conceito, um pipeline de feedback rápido (build, test e monitor).</li><li>Simular um pipeline de integração contínua (entrada → build → teste → resultado) e identificar em que etapa uma falha seria detectada.</li><li>Interpretar o status de um pipeline (build e teste) e decidir, com justificativa técnica, se um deploy pode ser realizado.</li><li>Calcular métricas DORA (lead time, deployment frequency, MTTR e change fail rate) a partir de dados reais de commits, deploys e incidentes.</li><li>Diagnosticar o gargalo mais crítico do time (velocidade x estabilidade) e propor uma recomendação técnica priorizada.</li></ul>
 
     <h3>Procedimento / Atividade</h3>
-    <p><b>Atividade proposta:</b> o grupo atua como consultor de uma equipe de desenvolvimento. Primeiro analisa um processo de deploy sem automação e sem monitoramento, propondo melhorias com base no CALMS. Depois simula o pipeline de um sistema financeiro com um bug na função de soma, decidindo em que etapa ele seria barrado antes de chegar ao cliente.</p>
+    <p><b>Atividade proposta:</b> o grupo atua como consultor de uma equipe de desenvolvimento. Primeiro analisa um processo de deploy sem automação e sem monitoramento, propondo melhorias com base no CALMS. Depois simula o pipeline de um sistema financeiro com um bug na função de soma, decidindo em que etapa ele seria barrado antes de chegar ao cliente. Por fim, calcula métricas DORA a partir de dados de duas semanas, diagnostica o maior gargalo do time e propõe uma recomendação técnica.</p>
 
     <h3>Procedimentos para a realização da atividade</h3>
     <div id="corpoRoteiro"></div>

@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E%F0%9F%93%8B%3C/text%3E%3C/svg%3E">
+<title>Infraestrutura como Código (IaC) com Terraform — Registro de Aula — Semana 22</title>
+<style>
+:root{
+  --bg:#f5f7f6; --surface:#ffffff; --surface-2:#eef2f1; --ink:#17222b; --muted:#5d6b75;
+  --border:#d9e1df; --border-strong:#c2cecb;
+  --accent:#136f78; --accent-ink:#ffffff; --accent-soft:#e0f0f1; --accent-line:#7fc0c6;
+  --ok:#1f7a4d; --ok-soft:#e3f3ea; --no:#a3401b; --no-soft:#fbeae2;
+  --amber:#8a5a12; --amber-soft:#fbf0dc;
+  --shadow:0 1px 2px rgba(16,32,38,.06), 0 8px 24px -18px rgba(16,32,38,.4);
+  --mono:ui-monospace,"Cascadia Mono","Consolas","SF Mono",Menlo,monospace;
+  --sans:"Segoe UI Variable Text","Segoe UI",system-ui,-apple-system,"Helvetica Neue",sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0e1519; --surface:#151f24; --surface-2:#1b262c; --ink:#e6edee; --muted:#95a4ac;
+    --border:#26333a; --border-strong:#33434b;
+    --accent:#4ab8c2; --accent-ink:#08161a; --accent-soft:#16333733; --accent-line:#2c6d74;
+    --ok:#5cc48b; --ok-soft:#15302399; --no:#e59468; --no-soft:#32201699;
+    --amber:#dda65b; --amber-soft:#2c241599;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -20px rgba(0,0,0,.9);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0e1519; --surface:#151f24; --surface-2:#1b262c; --ink:#e6edee; --muted:#95a4ac;
+  --border:#26333a; --border-strong:#33434b;
+  --accent:#4ab8c2; --accent-ink:#08161a; --accent-soft:#16333733; --accent-line:#2c6d74;
+  --ok:#5cc48b; --ok-soft:#15302399; --no:#e59468; --no-soft:#32201699;
+  --amber:#dda65b; --amber-soft:#2c241599;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.55;margin:0}
+.wrap{max-width:900px;margin:0 auto;padding:36px 20px 140px}
+h1,h2,h3{margin:0;text-wrap:balance;font-weight:650}
+a{color:var(--accent)}
+
+.eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:600}
+.topo h1{font-size:31px;letter-spacing:-.015em;margin:10px 0 6px}
+.topo .sub{color:var(--muted);font-size:15px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+.chip{font-family:var(--mono);font-size:11.5px;color:var(--muted);background:var(--surface);
+  border:1px solid var(--border);border-radius:999px;padding:5px 11px;white-space:nowrap}
+.chip b{color:var(--ink);font-weight:600}
+
+section{margin-top:34px}
+.sec-head{display:flex;align-items:baseline;gap:10px;padding-bottom:8px;border-bottom:2px solid var(--accent-line);margin-bottom:16px}
+.sec-head h2{font-size:19px}
+.sec-head .n{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--accent)}
+.lead{color:var(--muted);font-size:15px;margin:0 0 14px}
+
+/* objetivos */
+.objetivos{display:grid;gap:9px;margin:0;padding:0;list-style:none}
+.objetivos li{display:flex;gap:10px;align-items:flex-start;font-size:15px}
+.objetivos .tick{color:var(--ok);font-weight:700;flex:none}
+
+/* solução digital */
+.ferramenta{display:flex;gap:15px;align-items:flex-start;background:var(--surface);border:1px solid var(--border);
+  border-radius:12px;padding:16px 18px;box-shadow:var(--shadow)}
+.ferramenta .marca{flex:none;width:46px;height:46px;border-radius:10px;background:var(--accent-soft);
+  border:1px solid var(--accent-line);display:flex;align-items:center;justify-content:center;
+  font-family:var(--mono);font-size:16px;font-weight:700;color:var(--accent)}
+.ferramenta .nome{font-size:16px;font-weight:650;margin-bottom:3px}
+.ferramenta .desc{font-size:14px;color:var(--muted)}
+.ferramenta .link{font-family:var(--mono);font-size:12.5px;margin-top:7px;word-break:break-all}
+
+/* visual */
+.visual{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px 18px;
+  box-shadow:var(--shadow);overflow-x:auto}
+.visual + .visual{margin-top:14px}
+.visual .cap{font-size:13px;color:var(--muted);margin-top:12px;text-align:center}
+svg.sv{display:block;width:100%;height:auto;max-width:760px;margin:0 auto}
+.sv-box{fill:var(--surface-2);stroke:var(--border-strong);stroke-width:1.5}
+.sv-box-soft{fill:var(--surface);stroke-dasharray:5 4}
+.sv-box-ok{fill:var(--ok-soft);stroke:var(--ok)}
+.sv-box-no{fill:var(--no-soft);stroke:var(--no)}
+.sv-card{fill:var(--surface-2);stroke:var(--border-strong);stroke-width:1.5}
+.sv-diamond{fill:var(--accent-soft);stroke:var(--accent);stroke-width:1.8}
+.sv-label{fill:var(--ink);font-family:var(--sans);font-size:14.5px;text-anchor:middle}
+.sv-label.sv-small{font-size:13px}
+.sv-legend{fill:var(--muted);font-family:var(--sans);font-size:12.5px;text-anchor:middle;font-style:italic}
+.sv-range{fill:var(--muted);font-family:var(--mono);font-size:12px;text-anchor:middle}
+.sv-tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-anchor:middle;font-weight:600}
+.sv-ok{fill:var(--ok)} .sv-no{fill:var(--no)}
+.sv-arrow{stroke:var(--border-strong);stroke-width:1.8;fill:none}
+.sv-arrow-soft{stroke:var(--border);stroke-width:1.4;stroke-dasharray:4 4}
+.sv-headfill{fill:var(--border-strong)} .sv-headfill-soft{fill:var(--border)}
+.sv-code{fill:var(--ink);font-family:var(--mono);font-size:14px}
+.sv-code-key{fill:var(--accent);font-weight:600}
+.sv-code-soft{fill:var(--muted)}
+.sv-code-title{fill:var(--muted);font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase}
+.sv-band{stroke-width:1.5}
+.sv-band-0{fill:var(--accent-soft);stroke:var(--accent-line)}
+.sv-band-1{fill:var(--ok-soft);stroke:var(--ok)}
+.sv-band-2{fill:var(--amber-soft);stroke:var(--amber)}
+.sv-band-3{fill:var(--no-soft);stroke:var(--no)}
+.sv-node{fill:var(--accent);stroke:var(--surface);stroke-width:1.5}
+.sv-link{stroke:var(--border-strong);stroke-width:1.6;fill:none}
+.sv-link-bold{stroke-width:3}
+.sv-ring{fill:none;stroke-dasharray:0}
+.sv-hub{fill:var(--accent);stroke:none}
+.sv-term{fill:var(--muted);stroke:none}
+.sv-mini{fill:var(--muted);font-family:var(--mono);font-size:10.5px;text-anchor:middle}
+.sv-left{text-anchor:start}
+.sv-card-key{fill:var(--accent);font-family:var(--mono);font-size:11.5px;letter-spacing:.07em;
+  text-transform:uppercase;text-anchor:middle;font-weight:600}
+.sv-arrow-no{stroke:var(--no)}
+.sv-collision{fill:var(--no-soft);stroke:var(--no);stroke-width:2}
+.sv-boom{fill:var(--no);font-family:var(--sans);font-size:20px;font-weight:700;text-anchor:middle}
+.sv-token{fill:var(--amber-soft);stroke:var(--amber);stroke-width:1.5}
+.sv-token-txt{fill:var(--amber);font-family:var(--mono);font-size:11px;font-weight:700;text-anchor:middle;letter-spacing:.06em}
+.sv-wave{fill:none;stroke:var(--accent);stroke-width:2.2;stroke-linejoin:round}
+.sv-guide{stroke:var(--border);stroke-width:1;stroke-dasharray:3 3}
+.sv-ray{stroke-width:3.5;stroke-linecap:round;fill:none}
+.sv-ray.sv-band-0{stroke:var(--accent)} .sv-ray.sv-band-1{stroke:var(--ok)} .sv-ray.sv-band-2{stroke:var(--amber)}
+
+.comoBox{background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:12px;padding:18px 20px}
+.comoBox h2{font-size:16px;margin-bottom:10px;color:var(--accent)}
+.comoList{margin:0;padding-left:0;list-style:none;display:grid;gap:9px}
+.comoList li{display:flex;gap:10px;font-size:14.5px;align-items:flex-start}
+.comoList .num{flex:none;width:20px;height:20px;border-radius:50%;background:var(--accent);color:var(--accent-ink);
+  font-family:var(--mono);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:2px}
+
+.ident{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+
+.passo{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px 18px 16px;
+  box-shadow:var(--shadow);margin-bottom:14px}
+.passo-top{display:flex;gap:12px;align-items:flex-start}
+.passo-num{flex:none;width:28px;height:28px;border-radius:8px;background:var(--accent);color:var(--accent-ink);
+  font-family:var(--mono);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.passo-txt{font-size:15.5px;font-weight:600;margin-bottom:0}
+.dica{margin:10px 0 0 40px;padding:9px 12px;background:var(--amber-soft);border-left:3px solid var(--amber);
+  border-radius:0 7px 7px 0;font-size:13.5px;color:var(--ink)}
+.dica b{color:var(--amber);font-weight:650}
+.campoWrap{margin:14px 0 0 40px}
+@media (max-width:600px){.dica,.campoWrap{margin-left:0}}
+
+label.f{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:5px;font-weight:600}
+input[type=text],textarea,select{width:100%;background:var(--surface-2);color:var(--ink);
+  border:1px solid var(--border-strong);border-radius:8px;padding:9px 11px;font-family:var(--sans);font-size:14.5px;
+  transition:border-color .12s, box-shadow .12s}
+textarea{resize:vertical;min-height:64px;line-height:1.5}
+textarea.cod{font-family:var(--mono);font-size:13.5px;min-height:200px;white-space:pre;overflow-wrap:normal;overflow-x:auto}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.hint{font-size:12.5px;color:var(--muted);margin-top:5px}
+
+.modelo{background:var(--surface-2);border:1px solid var(--border-strong);border-radius:10px;padding:14px 16px;
+  font-family:var(--mono);font-size:13.5px;white-space:pre;overflow-x:auto;color:var(--ink);margin-bottom:14px}
+.modelo .k{color:var(--accent);font-weight:600}
+.modelo .b{color:var(--muted)}
+
+.tabWrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{border:1px solid var(--border);padding:8px 10px;text-align:left;vertical-align:top}
+th{background:var(--accent-soft);color:var(--accent);font-size:12px;letter-spacing:.04em;text-transform:uppercase;font-weight:650}
+td.fix{background:var(--surface-2);font-weight:600;white-space:nowrap}
+td input{border:none;background:transparent;padding:2px 0;font-size:14px}
+td input:focus{box-shadow:none;border-bottom:1px solid var(--accent)}
+table.criterios td:last-child{font-family:var(--mono);text-align:right;white-space:nowrap}
+
+.check{display:flex;gap:11px;align-items:flex-start;padding:10px 12px;border:1px solid var(--border);
+  border-radius:9px;background:var(--surface);margin-bottom:8px;cursor:pointer;transition:border-color .12s,background .12s}
+.check:hover{border-color:var(--accent-line)}
+.check input{flex:none;width:18px;height:18px;margin-top:2px;accent-color:var(--accent)}
+.check span{font-size:14.5px}
+.check.done{background:var(--ok-soft);border-color:var(--ok)}
+.progresso{font-family:var(--mono);font-size:12.5px;color:var(--muted);margin-bottom:10px}
+.dados{margin:18px 0;border:1px solid var(--border);border-radius:12px;background:var(--surface);overflow:hidden}
+.dados .cab{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;
+  padding:11px 14px;border-bottom:1px solid var(--border);background:var(--accent-soft)}
+.dados .nomeArq{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13.5px;font-weight:600;color:var(--accent)}
+.dados .acoes{display:flex;gap:8px}
+.dados .mini{font:inherit;font-size:12.5px;font-weight:600;padding:6px 11px;border-radius:8px;cursor:pointer;
+  border:1px solid var(--border);background:var(--bg);color:var(--ink);text-decoration:none;display:inline-block}
+.dados .mini:hover{border-color:var(--accent)}
+.dados pre{margin:0;padding:13px 15px;overflow-x:auto;font-family:ui-monospace,Menlo,Consolas,monospace;
+  font-size:12.5px;line-height:1.65;color:var(--ink);white-space:pre}
+.dados .obs{padding:9px 15px 12px;font-size:12.5px;color:var(--muted);border-top:1px solid var(--border)}
+@media print{.dados .acoes{display:none}}
+.card-ava{margin:18px 0 0;border:1px solid var(--border);border-radius:12px;background:var(--surface);overflow:hidden}
+.card-ava .trilha{padding:9px 16px;border-bottom:1px solid var(--border);background:var(--accent-soft);
+  font-size:11.5px;letter-spacing:.03em;color:var(--muted)}
+.card-ava .corpo{padding:16px 18px 18px}
+.card-ava h3{margin:0 0 4px;font-size:19px;line-height:1.3;color:var(--ink);font-weight:700}
+.card-ava .chamada{margin:0 0 12px;font-size:14.5px;line-height:1.6;color:var(--ink)}
+.card-ava .bloco{margin-top:13px}
+.card-ava .bloco > .rot{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:5px}
+.card-ava .bloco p{margin:0;font-size:14px;line-height:1.6;color:var(--ink)}
+.card-ava ul,.card-ava ol{margin:0;padding-left:21px}
+.card-ava li ul{margin:3px 0 5px;padding-left:19px;list-style:circle}
+.card-ava li{font-size:14px;line-height:1.62;color:var(--ink);margin:2px 0}
+.card-ava .moldura{border:1px solid var(--border);border-radius:9px;padding:12px 14px 14px;margin-top:13px}
+.card-ava .moldura .bloco:first-of-type{margin-top:9px}
+.card-ava .fonte{margin-top:12px;font-size:11.5px;color:var(--muted);text-align:right;font-style:italic}
+.imgWrap{margin-top:6px}
+.imgCaixa{border:1.5px dashed var(--border);border-radius:11px;background:var(--surface);padding:16px;text-align:center}
+.imgCaixa.temFoto{border-style:solid;padding:10px}
+.imgCaixa .conv{font-size:13.5px;color:var(--muted);line-height:1.55;margin:0 0 11px}
+.imgCaixa input[type=file]{display:none}
+.imgBtn{font:inherit;font-size:13.5px;font-weight:600;padding:9px 15px;border-radius:9px;cursor:pointer;
+  border:1px solid var(--accent);background:var(--accent);color:#fff}
+.imgBtn:hover{filter:brightness(1.07)}
+.imgBtn.sec{background:var(--bg);color:var(--ink);border-color:var(--border);margin-left:7px}
+.imgPreview{display:block;max-width:100%;max-height:420px;margin:0 auto 10px;border-radius:8px}
+.imgNome{font-size:12px;color:var(--muted);margin-top:4px;word-break:break-all}
+.avisoPDF{margin-top:14px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:10px;
+  padding:13px 15px;font-size:14px}
+.avisoPDF b{color:var(--accent)}
+
+.refs{margin:0;padding-left:20px;display:grid;gap:7px}
+.refs li{font-size:14px;color:var(--ink)}
+.refs li span{color:var(--muted)}
+
+.navAtiv{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:stretch;
+  margin:34px 0 0;padding-top:22px;border-top:1px solid var(--border)}
+.navAtiv a{display:flex;flex-direction:column;gap:2px;text-decoration:none;padding:12px 15px;border-radius:11px;
+  border:1px solid var(--border);background:var(--surface);color:var(--ink);transition:border-color .12s}
+.navAtiv a:hover{border-color:var(--accent)}
+.navAtiv .dir{text-align:right;align-items:flex-end}
+.navAtiv .rot{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:600}
+.navAtiv .tit{font-size:14px;font-weight:600;line-height:1.35}
+.navAtiv .meio{justify-content:center;align-items:center;font-size:13.5px;font-weight:600;color:var(--muted);white-space:nowrap}
+.navAtiv .vazio{border:1px dashed var(--border);opacity:.4}
+.navGit{display:flex;gap:11px;align-items:center;margin-top:16px;padding:13px 16px;border-radius:11px;
+  border:1px solid var(--accent-line);background:var(--accent-soft);text-decoration:none;color:var(--ink)}
+.navGit:hover{border-color:var(--accent)}
+.navGit .ic{font-family:var(--mono);font-size:12px;font-weight:700;color:#fff;background:var(--accent);
+  border-radius:7px;padding:7px 9px;flex:none}
+.navGit b{display:block;font-size:14.5px}
+.navGit span{font-size:13px;color:var(--muted)}
+@media (max-width:620px){.navAtiv{grid-template-columns:1fr}.navAtiv .dir{text-align:left;align-items:flex-start}}
+@media print{.navAtiv,.navGit{display:none}}
+.barra{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--border);
+  padding:11px 20px;display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap;
+  box-shadow:0 -6px 24px -18px rgba(0,0,0,.6);z-index:20}
+.btn{font-family:var(--sans);font-size:14px;font-weight:600;border-radius:9px;padding:10px 18px;border:1px solid var(--border-strong);
+  background:var(--surface-2);color:var(--ink);cursor:pointer}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn.primary:hover{filter:brightness(1.08)}
+.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.status{font-size:12.5px;color:var(--muted);font-family:var(--mono);min-width:150px;text-align:center}
+
+/* ================= RELATÓRIO IMPRESSO (padrão roteiro de aula prática) ============= */
+#relatorio{display:none}
+@media print{
+  @page{size:A4;margin:25mm 20mm 20mm 25mm}
+  body{background:#fff;color:#000;font-family:"Times New Roman",Georgia,serif;font-size:12pt;line-height:1.5}
+  .wrap>*:not(#relatorio){display:none !important}
+  .barra{display:none !important}
+  #relatorio{display:block}
+  .wrap{max-width:none;padding:0;margin:0}
+
+  .folha{page-break-after:always;text-align:center}
+  .folha .inst{font-size:12pt;font-weight:bold;text-transform:uppercase;line-height:1.4}
+  .folha .meio{margin-top:70mm}
+  .folha .fim{margin-top:70mm;text-transform:uppercase}
+  .folha .tituloTrab{font-size:14pt;font-weight:bold;text-transform:uppercase;margin-top:6mm}
+  .folha .subtitulo{font-size:12pt;margin-top:2mm}
+  .folha .autores{font-size:12pt;margin-top:4mm}
+  .fr-nota{width:8.5cm;margin:14mm 0 0 auto;text-align:justify;font-size:10pt;line-height:1.3}
+  .fr-orient{width:8.5cm;margin:6mm 0 0 auto;text-align:left;font-size:10pt}
+
+  #roteiro h2.rtitulo{font-size:12pt;font-weight:bold;text-align:center;text-transform:uppercase;margin:0 0 8mm}
+  #roteiro .rlinha{font-size:12pt;margin-bottom:2mm}
+  #roteiro .rlinha b{text-transform:uppercase}
+  #roteiro h3{font-size:12pt;font-weight:bold;text-transform:uppercase;margin:7mm 0 3mm;page-break-after:avoid}
+  #roteiro p{margin:0 0 3mm;text-align:justify}
+  #roteiro ul{margin:0 0 3mm;padding-left:6mm}
+  #roteiro li{margin-bottom:1.5mm}
+  #roteiro .lista-obj{list-style:none;padding-left:0}
+  #roteiro .lista-obj li:before{content:"✓  ";font-weight:bold}
+  #roteiro .link{font-family:"Courier New",monospace;font-size:10.5pt;word-break:break-all}
+
+  #roteiro .item{margin-bottom:5mm;page-break-inside:avoid}
+  #roteiro .item .perg{font-weight:bold;margin-bottom:1.5mm}
+  #roteiro .item .rot{font-size:10.5pt;font-variant:small-caps;color:#333;margin-top:2mm}
+  #roteiro .item .resp{white-space:pre-wrap;border-bottom:1px dotted #999;padding-bottom:1mm;min-height:5mm}
+  #roteiro .item .resp.cod{font-family:"Courier New",monospace;font-size:10.5pt;white-space:pre;
+    border:1px solid #999;border-bottom:1px solid #999;padding:3mm;background:#f6f6f6}
+  #roteiro .figura{margin:3mm 0;page-break-inside:avoid;text-align:center}
+  #roteiro .figura img{max-width:100%;max-height:150mm}
+  #roteiro .figura .molduraVazia{border:1px dashed #777;height:95mm;display:flex;align-items:center;
+    justify-content:center;color:#777;font-style:italic;font-size:10.5pt}
+  #roteiro .figura .legenda{font-size:10pt;color:#333;margin-top:1.5mm;font-style:italic}
+  #roteiro table{width:100%;border-collapse:collapse;font-size:10.5pt;margin-top:2mm}
+  #roteiro th,#roteiro td{border:1px solid #666;padding:1.5mm 2mm}
+  #roteiro th{background:#e8e8e8;color:#000;text-transform:none;font-variant:small-caps;letter-spacing:0}
+  #roteiro .checkline{margin-bottom:1.5mm;font-size:11pt}
+}
+
+.tabs{position:sticky;top:0;z-index:5;display:flex;gap:6px;overflow-x:auto;background:var(--bg);padding:8px 0;border-bottom:2px solid var(--border-strong);margin-bottom:6px}
+.tabs{scrollbar-width:none}.tabs::-webkit-scrollbar{display:none}
+.tabs button{flex:none;border:1.5px solid var(--border-strong);background:var(--surface);color:var(--ink);border-radius:999px;padding:7px 14px;font-weight:600;white-space:nowrap;cursor:pointer;font:inherit}
+.tabs button[aria-selected="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+section.tab{display:flex;flex-direction:column;gap:16px}
+[hidden]{display:none!important}
+
+/* Processos: diagramas da apostila usam cores fixas, então ficam sempre sobre fundo claro */
+.visual.claro{background:#fff;border-color:#d9e1df}
+.visual.claro .cap{color:#5d6b75}
+.visual.claro svg{max-width:100%;height:auto;display:block;margin:0 auto}
+.grupo{border:1px dashed var(--border-strong);border-radius:10px;padding:10px 12px;margin:10px 0 0 40px}
+.grupo > .subN{font-weight:650;color:var(--accent);font-size:13px;letter-spacing:.04em}
+.grupo .campoWrap{margin-left:0}
+.dica.campo{margin-left:0;margin-top:6px}
+.passo-txt .desc{display:block;font-weight:400;color:var(--muted);font-size:14.5px;margin-top:4px}
+@media (max-width:600px){.grupo{margin-left:0}}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="topo">
+    <div class="eyebrow">PROCESSOS DE DESENVOLVIMENTO DE SOFTWARE</div>
+    <h1>Infraestrutura como Código (IaC) com Terraform</h1>
+    <div class="sub">Registro de Aula — Semana 22 · Infraestrutura como Código (IaC) com Terraform</div>
+    <div class="chips"><span class="chip">4º bimestre</span><span class="chip">Base: <b>Capítulo 22</b></span><span class="chip">Entrega: <b>PDF no AVA</b></span><span class="chip">Arquivo: <b>NOME_TURMA_S22</b></span></div>
+  </header>
+
+  <nav class="tabs" role="tablist" aria-label="Partes da atividade">
+    <button role="tab" data-tab="como" id="t-como" aria-selected="true">Como fazer</button>
+    <button role="tab" data-tab="fluxograma" id="t-fluxograma" aria-selected="false">Fluxograma</button>
+    <button role="tab" data-tab="relatorio-tab" id="t-relatorio-tab" aria-selected="false">Relatório</button>
+  </nav>
+
+<section class="tab" id="como" role="tabpanel">
+  <section>
+    <div class="sec-head"><span class="n">ATIVIDADE PROPOSTA</span><h2>O que vocês vão resolver</h2></div>
+    <p class="lead" style="color:var(--ink);font-size:15.5px">Vocês vão aprender Terraform na prática, em três etapas: primeiro leem um arquivo Terraform simples para identificar suas partes; depois refatoram uma infraestrutura duplicada (dev e prod) em um módulo reutilizável, usando workspaces para separar os ambientes; por fim, conectam uma stack completa (rede, computação, balanceamento e banco) organizada em módulos, decidindo a ordem e as dependências entre eles.</p>
+    <p class="muted">Base: apostila, Capítulo 22 (Infraestrutura como Código com Terraform).</p>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="n">OBJETIVOS</span><h2>O que vocês vão aprender aqui</h2></div>
+    <ul class="objetivos">
+      <li><span class="tick">✓</span><span>Compreender a sintaxe básica HCL, providers, resources e o fluxo init → plan → apply.</span></li>
+      <li><span class="tick">✓</span><span>Identificar, num arquivo Terraform, o provider, o recurso, o nome do recurso e o comando de revisão.</span></li>
+      <li><span class="tick">✓</span><span>Refatorar uma infraestrutura duplicada em um módulo reutilizável, com variáveis.</span></li>
+      <li><span class="tick">✓</span><span>Usar workspaces da CLI para manter ambientes (dev/prod) separados a partir do mesmo código.</span></li>
+      <li><span class="tick">✓</span><span>Entender como módulos de uma stack (rede, compute, ALB, banco) se conectam por dependências e outputs.</span></li>
+    </ul>
+  </section>
+
+    <section>
+  <div class="sec-head"><span class="n">ENTENDA</span><h2>Infraestrutura como Código (IaC) com Terraform</h2></div>
+  <p class="lead">Use o diagrama como mapa da atividade: ele mostra a estrutura que as respostas do grupo precisam seguir.</p>
+  <div class="visual claro"><svg viewBox="0 0 600 150" role="img" aria-label="O que é Infraestrutura como Código: descrever a infraestrutura em arquivos de texto em vez de montar manualmente">
+<style>.p22t{font:700 12.5px sans-serif;fill:#17231f;text-anchor:middle}.p22d{font:10.5px sans-serif;fill:#59736c;text-anchor:middle}</style>
+<rect x="5" y="10" width="270" height="118" rx="10" fill="#fbeae2" stroke="#a3401b" stroke-width="1.5"></rect>
+<text class="p22t" x="140" y="34" fill="#a3401b">Sem IaC (no improviso)</text>
+<text class="p22d" x="140" y="58">esquecer etapas</text>
+<text class="p22d" x="140" y="76">montar fora de ordem</text>
+<text class="p22d" x="140" y="94">não conseguir repetir depois</text>
+<rect x="325" y="10" width="270" height="118" rx="10" fill="#e3f3ea" stroke="#1f7a4d" stroke-width="1.5"></rect>
+<text class="p22t" x="460" y="34" fill="#1f7a4d">Com IaC (Terraform)</text>
+<text class="p22d" x="460" y="58">infraestrutura descrita em arquivo</text>
+<text class="p22d" x="460" y="76">pode ser executada sempre que precisar</text>
+<text class="p22d" x="460" y="94">fácil de repetir e revisar</text>
+</svg>
+<p class="cap">IaC significa descrever a infraestrutura em arquivos de texto — um passo a passo que pode ser executado sempre que necessário, em vez de clicar em telas.</p></div>
+  <div class="visual claro"><svg viewBox="0 0 600 180" role="img" aria-label="Sintaxe HCL: bloco provider e bloco resource, com tipo, nome e configuração; ciclo init, plan e apply">
+<style>.p22bt{font:700 12px sans-serif;fill:#17231f}.p22bc{font:12px ui-monospace,Consolas,monospace;fill:#17231f}.p22bk{font:700 12px ui-monospace,Consolas,monospace;fill:#136f78}</style>
+<rect x="5" y="5" width="280" height="90" rx="8" fill="#eef2f1" stroke="#c2cecb" stroke-width="1.5"></rect>
+<text class="p22bk" x="18" y="26">provider</text><text class="p22bc" x="90" y="26">"aws" {</text>
+<text class="p22bc" x="30" y="46">region = "us-east-1"</text>
+<text class="p22bc" x="18" y="66">}</text>
+<text class="p22d" x="140" y="88" fill="#59736c" font-size="10.5">conecta o Terraform a uma plataforma</text>
+<rect x="315" y="5" width="280" height="90" rx="8" fill="#eef2f1" stroke="#c2cecb" stroke-width="1.5"></rect>
+<text class="p22bk" x="328" y="26">resource</text><text class="p22bc" x="402" y="26">"aws_vpc" "nome" {</text>
+<text class="p22bc" x="340" y="46">cidr_block = "..."</text>
+<text class="p22bc" x="328" y="66">}</text>
+<text class="p22d" x="455" y="88" fill="#59736c" font-size="10.5">tipo do recurso → nome dado por nós → configuração</text>
+<rect x="5" y="115" width="590" height="55" rx="10" fill="#e0f0f1" stroke="#7fc0c6" stroke-width="1.5"></rect>
+<text class="p22bt" x="90" y="140" text-anchor="middle">init</text><text class="p22d" x="90" y="156">prepara o projeto</text>
+<text class="p22bt" x="300" y="140" text-anchor="middle">plan</text><text class="p22d" x="300" y="156">mostra o que vai mudar</text>
+<text class="p22bt" x="510" y="140" text-anchor="middle">apply</text><text class="p22d" x="510" y="156">executa as mudanças</text>
+<path d="M165,140 L235,140" stroke="#136f78" stroke-width="1.8" marker-end="url(#p22ar)"></path>
+<path d="M375,140 L445,140" stroke="#136f78" stroke-width="1.8" marker-end="url(#p22ar)"></path>
+<defs><marker id="p22ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#136f78"></path></marker></defs>
+</svg>
+<p class="cap">Sem provider, o Terraform não sabe onde criar os recursos. O fluxo init → plan → apply ajuda a revisar antes de executar de verdade.</p></div>
+  <div class="visual claro"><svg viewBox="0 0 600 160" role="img" aria-label="Módulos e workspaces: um módulo reutilizável alimentado por variáveis, usado em dois workspaces diferentes">
+<style>.p22mt{font:700 12px sans-serif;fill:#17231f;text-anchor:middle}.p22md{font:10.5px sans-serif;fill:#59736c;text-anchor:middle}</style>
+<rect x="220" y="10" width="160" height="50" rx="9" fill="#e0f0f1" stroke="#7fc0c6" stroke-width="1.8"></rect>
+<text class="p22mt" x="300" y="30">Módulo</text><text class="p22md" x="300" y="46">recebe variáveis</text>
+<rect x="60" y="100" width="190" height="50" rx="9" fill="#eef2f1" stroke="#c2cecb" stroke-width="1.5"></rect>
+<text class="p22mt" x="155" y="120">Workspace dev</text><text class="p22md" x="155" y="136">estado separado</text>
+<rect x="350" y="100" width="190" height="50" rx="9" fill="#eef2f1" stroke="#c2cecb" stroke-width="1.5"></rect>
+<text class="p22mt" x="445" y="120">Workspace prod</text><text class="p22md" x="445" y="136">estado separado</text>
+<path d="M260,60 L170,100" stroke="#136f78" stroke-width="1.8" fill="none" marker-end="url(#p22ar2)"></path>
+<path d="M340,60 L430,100" stroke="#136f78" stroke-width="1.8" fill="none" marker-end="url(#p22ar2)"></path>
+<defs><marker id="p22ar2" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#136f78"></path></marker></defs>
+</svg>
+<p class="cap">Um módulo bem escrito é reaproveitado por vários ambientes — cada workspace guarda seu próprio estado, sem duplicar código.</p></div>
+</section>
+    </section>
+<section class="tab" id="fluxograma" role="tabpanel" hidden>
+  <div class="sec-head"><span class="n">FLUXOGRAMA</span><h2>Da leitura de um arquivo Terraform à stack completa</h2></div>
+  <p class="lead">O fluxograma mostra a ordem da atividade: ler um arquivo simples (Aula 1), refatorar em módulo e separar ambientes com workspaces (Aula 2), e conectar uma stack completa em módulos (Aula 3).</p>
+  <div class="visual">
+    <svg viewBox="0 0 640 466" class="sv" role="img" aria-label="Fluxograma da atividade: início; ler o arquivo Terraform e identificar as partes; criar o módulo reutilizável de rede; criar workspaces para dev e prod; identificar o módulo que deve vir primeiro na stack; conectar os módulos da stack no main.tf; executar a stack e refletir sobre a integração; fim">
+      <defs>
+        <marker id="fp22-head" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+          <path d="M0,0 L9,4.5 L0,9 z" class="sv-headfill"/>
+        </marker>
+      </defs>
+      <rect x="100" y="8" width="200" height="32" rx="16" class="sv-box-ok"/>
+      <text x="200" y="29" class="sv-label sv-small">INÍCIO</text>
+      <path d="M200 40 L200 54" class="sv-arrow" marker-end="url(#fp22-head)"/>
+
+      <rect x="60" y="54" width="280" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="73" class="sv-label sv-small">Ler o arquivo Terraform e</text>
+      <text x="200" y="90" class="sv-label sv-small">identificar as partes (Passo 1)</text>
+      <path d="M200 100 L200 114" class="sv-arrow" marker-end="url(#fp22-head)"/>
+
+      <rect x="60" y="114" width="280" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="133" class="sv-label sv-small">Criar o módulo reutilizável</text>
+      <text x="200" y="150" class="sv-label sv-small">de rede (Passo 2)</text>
+      <path d="M200 160 L200 174" class="sv-arrow" marker-end="url(#fp22-head)"/>
+
+      <rect x="60" y="174" width="280" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="193" class="sv-label sv-small">Criar workspaces para</text>
+      <text x="200" y="210" class="sv-label sv-small">dev e prod (Passo 3)</text>
+      <path d="M200 220 L200 234" class="sv-arrow" marker-end="url(#fp22-head)"/>
+
+      <rect x="60" y="234" width="280" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="253" class="sv-label sv-small">Identificar o módulo que deve</text>
+      <text x="200" y="270" class="sv-label sv-small">vir primeiro na stack (Passo 4)</text>
+      <path d="M200 280 L200 294" class="sv-arrow" marker-end="url(#fp22-head)"/>
+
+      <rect x="60" y="294" width="280" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="313" class="sv-label sv-small">Conectar os módulos da</text>
+      <text x="200" y="330" class="sv-label sv-small">stack no main.tf (Passo 5)</text>
+      <path d="M200 340 L200 354" class="sv-arrow" marker-end="url(#fp22-head)"/>
+
+      <rect x="60" y="354" width="280" height="46" rx="8" class="sv-box"/>
+      <text x="200" y="373" class="sv-label sv-small">Executar a stack e refletir</text>
+      <text x="200" y="390" class="sv-label sv-small">sobre a integração (Passo 6)</text>
+      <path d="M200 400 L200 414" class="sv-arrow" marker-end="url(#fp22-head)"/>
+
+      <rect x="100" y="414" width="200" height="32" rx="16" class="sv-box-ok"/>
+      <text x="200" y="435" class="sv-label sv-small">FIM</text>
+    </svg>
+    <div class="cap">O Passo 2 usa o mesmo código duplicado mostrado na aba Como fazer (ambientes dev e prod) como ponto de partida para o módulo.</div>
+  </div>
+  <div class="comoBox">
+    <h3 style="margin-top:0">Como ler o fluxograma</h3>
+    <ol class="comoList">
+      <li><span class="num">1</span><span>O Passo 1 é sobre ler o código já dado no slide — provider e resource já estão escritos; a tarefa é identificar cada parte, não escrever código novo.</span></li>
+      <li><span class="num">2</span><span>O Passo 2 segue o modelo de módulo da aba Como fazer — criem os arquivos exatamente como no modelo antes de responder às perguntas.</span></li>
+      <li><span class="num">3</span><span>O Passo 3 usa o mesmo módulo do Passo 2, só muda o ambiente (workspace) — leiam a expressão condicional do bloco locals com atenção para responder.</span></li>
+      <li><span class="num">4</span><span>O Passo 4 pede para pensar em dependência: qual recurso os outros módulos precisam para existir primeiro.</span></li>
+      <li><span class="num">5</span><span>O Passo 5 pede para completar as lacunas do fluxo e do main.tf — pensem em qual módulo entrega a informação que o outro módulo usa como entrada.</span></li>
+      <li><span class="num">6</span><span>O Passo 6 usa o comando que vocês já conhecem desde a Aula 1 para aplicar as mudanças de verdade, e fecha com a reflexão sobre a stack inteira.</span></li>
+    </ol>
+  </div>
+</section>
+<section class="tab" id="relatorio-tab" role="tabpanel" hidden>
+  <section>
+    <div class="sec-head"><span class="n">PASSO 0</span><h2>Identificação</h2></div>
+    <div class="ident"><div><label class="f" for="id0">Escola</label>
+       <input type="text" id="id0" data-campo="id0" data-idk="escola"></div><div><label class="f" for="id1">Turma</label>
+       <input type="text" id="id1" data-campo="id1" data-idk="turma"></div><div><label class="f" for="id2">Nome do grupo</label>
+       <input type="text" id="id2" data-campo="id2" data-idk="grupo"></div><div><label class="f" for="id3">Professor(a)</label>
+       <input type="text" id="id3" data-campo="id3" data-idk="professor"></div><div><label class="f" for="id4">Integrantes (nomes completos)</label>
+       <input type="text" id="id4" data-campo="id4" data-idk="integrantes"></div><div><label class="f" for="id5">Data</label>
+       <input type="text" id="id5" data-campo="id5" data-idk="data"></div></div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="n">PROCEDIMENTOS</span><h2>Respondam passo a passo</h2></div>
+
+    <div class="passo">
+      <div class="passo-top">
+        <span class="passo-num">1</span>
+        <div class="passo-txt">Lendo um arquivo Terraform <span class="desc">Observem o exemplo abaixo e respondam às questões a seguir.</span></div>
+      </div>
+      <div class="modelo">provider "aws" {
+  region = "us-east-1"
+}
+
+resource "aws_vpc" "minha_vpc" {
+  cidr_block = "10.0.0.0/16"
+}</div>
+      <div class="dica"><b>Como pensar:</b> observem cada parte do bloco provider e do bloco resource — tipo, nome e configuração — e revejam o ciclo init/plan/apply na aba Como fazer.</div>
+      <div class="campoWrap" data-rel="campo" data-rotulo="Qual é o provider usado no exemplo?"><label class="f" for="c1">Qual é o provider usado no exemplo?</label><input type="text" id="c1" data-campo="c1"></div>
+<div class="campoWrap" data-rel="campo" data-rotulo="Qual é o recurso que será criado?"><label class="f" for="c2">Qual é o recurso que será criado?</label><input type="text" id="c2" data-campo="c2"></div>
+<div class="campoWrap" data-rel="campo" data-rotulo="Qual é o nome dado a esse recurso?"><label class="f" for="c3">Qual é o nome dado a esse recurso?</label><input type="text" id="c3" data-campo="c3"></div>
+<div class="campoWrap" data-rel="campo" data-rotulo="Qual comando do Terraform mostra o que será criado antes da execução?"><label class="f" for="c4">Qual comando do Terraform mostra o que será criado antes da execução?</label><input type="text" id="c4" data-campo="c4"></div>
+<div class="campoWrap" data-rel="campo" data-rotulo="Em uma frase, por que esse arquivo representa Infraestrutura como Código?"><label class="f" for="c5">Em uma frase, por que esse arquivo representa Infraestrutura como Código?</label><textarea id="c5" data-campo="c5" rows="3"></textarea></div>
+    </div>
+    <div class="passo">
+      <div class="passo-top">
+        <span class="passo-num">2</span>
+        <div class="passo-txt">Criando um módulo reutilizável <span class="desc">Cenário: uma equipe criou duas versões quase iguais da infraestrutura, uma para desenvolvimento (dev) e outra para produção (prod). Isso gera dificuldade de manutenção, risco de erro e repetição.</span></div>
+      </div>
+      <div class="modelo">// Etapa 1 — código atual (duplicado nos dois ambientes)
+resource "aws_vpc" "main" {
+  cidr_block = "10.0.0.0/16"
+}
+resource "aws_subnet" "main" {
+  vpc_id     = aws_vpc.main.id
+  cidr_block = "10.0.1.0/24"
+}
+
+// Etapa 2 — crie modules/rede/variables.tf
+variable "vpc_cidr" {}
+variable "subnet_cidr" {}
+
+// e modules/rede/main.tf
+resource "aws_vpc" "main" {
+  cidr_block = var.vpc_cidr
+}
+resource "aws_subnet" "main" {
+  vpc_id     = aws_vpc.main.id
+  cidr_block = var.subnet_cidr
+}
+
+// Etapa 3 — no main.tf principal, troquem os recursos pelo módulo
+module "rede" {
+  source      = "./modules/rede"
+  vpc_cidr    = "10.0.0.0/16"
+  subnet_cidr = "10.0.1.0/24"
+}</div>
+      <div class="dica"><b>Como pensar:</b> sigam o passo a passo: primeiro identifiquem a repetição no código atual, depois criem os arquivos do módulo exatamente como no modelo, e por fim troquem os recursos do main.tf pela chamada ao módulo.</div>
+      <div class="campoWrap" data-rel="campo" data-rotulo="O que aconteceria se vocês precisassem criar essa mesma estrutura para outro ambiente? Vocês teriam que copiar esse código?"><label class="f" for="c6">O que aconteceria se vocês precisassem criar essa mesma estrutura para outro ambiente? Vocês teriam que copiar esse código?</label><textarea id="c6" data-campo="c6" rows="3"></textarea></div>
+<div class="campoWrap" data-rel="campo" data-rotulo="O que mudou no main.tf principal em relação ao código anterior? Qual é a vantagem de usar módulo nesse caso?"><label class="f" for="c7">O que mudou no main.tf principal em relação ao código anterior? Qual é a vantagem de usar módulo nesse caso?</label><textarea id="c7" data-campo="c7" rows="3"></textarea></div>
+    </div>
+    <div class="passo">
+      <div class="passo-top">
+        <span class="passo-num">3</span>
+        <div class="passo-txt">Workspaces para dev e prod <span class="desc">Agora vocês vão usar o mesmo módulo para dois ambientes diferentes, sem duplicar código.</span></div>
+      </div>
+      <div class="modelo">// Etapa 4 — crie os workspaces
+terraform workspace new dev
+terraform workspace new prod
+terraform workspace select dev
+
+// Etapa 5 — comportamento por ambiente
+locals {
+  instance_type = terraform.workspace == "prod" ? "t3.small" : "t2.micro"
+}</div>
+      <div class="dica"><b>Como pensar:</b> leiam a expressão condicional do bloco locals com atenção — ela decide o tipo de instância de acordo com o workspace ativo no momento.</div>
+      <div class="campoWrap" data-rel="campo" data-rotulo="O que muda quando o workspace é prod? O que acontece quando o workspace é dev?"><label class="f" for="c8">O que muda quando o workspace é prod? O que acontece quando o workspace é dev?</label><textarea id="c8" data-campo="c8" rows="3"></textarea></div>
+<div class="campoWrap" data-rel="campo" data-rotulo="Reflexão final: vocês precisaram duplicar código para os dois ambientes? Qual foi o papel do módulo e qual foi o papel do workspace? O que acontece se um novo ambiente precisar ser criado?"><label class="f" for="c9">Reflexão final: vocês precisaram duplicar código para os dois ambientes? Qual foi o papel do módulo e qual foi o papel do workspace? O que acontece se um novo ambiente precisar ser criado?</label><textarea id="c9" data-campo="c9" rows="4"></textarea></div>
+    </div>
+    <div class="passo">
+      <div class="passo-top">
+        <span class="passo-num">4</span>
+        <div class="passo-txt">Entendendo a arquitetura da stack <span class="desc">Cenário: uma empresa precisa subir uma aplicação com rede, balanceamento, computação e banco. Parte da infraestrutura já está organizada nos módulos rede, compute, alb e banco. O trabalho de vocês é entender e conectar essa stack.</span></div>
+      </div>
+      <div class="dica"><b>Como pensar:</b> pensem em qual desses quatro recursos os outros precisam para existir — sem ele, os demais não têm onde rodar.</div>
+      <div class="campoWrap" data-rel="campo" data-rotulo="Qual módulo (rede, compute, alb ou banco) deve ser criado primeiro? Por quê?"><label class="f" for="c10">Qual módulo (rede, compute, alb ou banco) deve ser criado primeiro? Por quê?</label><textarea id="c10" data-campo="c10" rows="3"></textarea></div>
+    </div>
+    <div class="passo">
+      <div class="passo-top">
+        <span class="passo-num">5</span>
+        <div class="passo-txt">Conectando os módulos no main.tf</div>
+      </div>
+      <div class="modelo">module "rede" {
+  source = "./modules/rede"
+}
+module "compute" {
+  source    = "./modules/compute"
+  subnet_id = __________
+}
+module "alb" {
+  source = "./modules/alb"
+  target = __________
+}</div>
+      <div class="dica"><b>Como pensar:</b> cada módulo recebe, como entrada, uma saída (output) de outro módulo que já existe — pensem em quem depende de quem antes de preencher as lacunas.</div>
+      <div class="campoWrap" data-rel="campo" data-rotulo="Completem o fluxo de dependência entre os módulos: rede → ______ → ______ → ______."><label class="f" for="c11">Completem o fluxo de dependência entre os módulos: rede → ______ → ______ → ______.</label><input type="text" id="c11" data-campo="c11"></div>
+<div class="campoWrap" data-rel="campo" data-rotulo="Quem depende da rede? Quem depende do compute?"><label class="f" for="c12">Quem depende da rede? Quem depende do compute?</label><textarea id="c12" data-campo="c12" rows="3"></textarea></div>
+<div class="campoWrap" data-rel="campo" data-rotulo="No código acima, o que deve ir no lugar de cada lacuna (subnet_id e target)?"><label class="f" for="c13">No código acima, o que deve ir no lugar de cada lacuna (subnet_id e target)?</label><textarea id="c13" data-campo="c13" rows="3"></textarea></div>
+    </div>
+    <div class="passo">
+      <div class="passo-top">
+        <span class="passo-num">6</span>
+        <div class="passo-txt">Execução e reflexão final</div>
+      </div>
+      <div class="dica"><b>Como pensar:</b> pensem no comando que vocês já usam desde a Aula 1 para aplicar de fato as mudanças.</div>
+      <div class="campoWrap" data-rel="campo" data-rotulo="Qual comando do Terraform executa toda a stack de uma vez? O que vocês esperam que aconteça?"><label class="f" for="c14">Qual comando do Terraform executa toda a stack de uma vez? O que vocês esperam que aconteça?</label><textarea id="c14" data-campo="c14" rows="3"></textarea></div>
+<div class="campoWrap" data-rel="campo" data-rotulo="O que acontece se um módulo falhar? Qual é a vantagem de dividir em módulos? O que seria difícil sem essa organização?"><label class="f" for="c15">O que acontece se um módulo falhar? Qual é a vantagem de dividir em módulos? O que seria difícil sem essa organização?</label><textarea id="c15" data-campo="c15" rows="4"></textarea></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="n">CONFIRA</span><h2>Checklist antes de gerar o PDF</h2></div>
+    <div class="progresso" id="progresso"></div>
+    <label class="check"><input type="checkbox" data-check="0"><span>Identificação (escola, turma, grupo, integrantes, professor(a), data) preenchida.</span></label><label class="check"><input type="checkbox" data-check="1"><span>As 5 perguntas sobre o arquivo Terraform (Passo 1) foram respondidas.</span></label><label class="check"><input type="checkbox" data-check="2"><span>O módulo reutilizável (Passo 2) foi criado e as perguntas respondidas.</span></label><label class="check"><input type="checkbox" data-check="3"><span>Os workspaces dev e prod (Passo 3) foram explicados e a reflexão final respondida.</span></label><label class="check"><input type="checkbox" data-check="4"><span>O módulo de criação prioritária (Passo 4) foi identificado com justificativa.</span></label><label class="check"><input type="checkbox" data-check="5"><span>O fluxo de dependências e o main.tf da stack (Passo 5) foram completados.</span></label><label class="check"><input type="checkbox" data-check="6"><span>O comando de execução e a reflexão final (Passo 6) foram respondidos.</span></label><label class="check"><input type="checkbox" data-check="7"><span>PDF gerado e enviado no AVA com o grupo identificado.</span></label>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="n">AVALIAÇÃO</span><h2>Como esta atividade será avaliada</h2></div>
+    <div class="tabWrap"><table class="criterios">
+      <thead><tr><th>Critério</th><th>Pontos</th></tr></thead>
+      <tbody><tr><td>Provider, recurso, nome e comando do arquivo Terraform identificados corretamente (Passo 1)</td><td>0,15</td></tr><tr><td>Módulo reutilizável (variables.tf, main.tf) e uso no projeto principal, coerentes com o modelo (Passo 2)</td><td>0,2</td></tr><tr><td>Workspaces criados e comportamento por ambiente explicado corretamente (Passo 3)</td><td>0,15</td></tr><tr><td>Módulo de criação prioritária identificado, com justificativa coerente (Passo 4)</td><td>0,15</td></tr><tr><td>Fluxo de dependência entre os módulos e integração no main.tf coerentes (Passo 5)</td><td>0,2</td></tr><tr><td>Comando de execução e reflexão final coerentes com os conceitos de IaC; entregue em PDF no AVA (Passo 6)</td><td>0,15</td></tr></tbody>
+    </table></div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="n">REFERÊNCIAS</span><h2>De onde veio o conteúdo desta aula</h2></div>
+    <ul class="refs"><li>Apostila da disciplina — Processos de Desenvolvimento de Software, Semana 22 (Capítulo 22).</li><li>SEDUC-SP — Registro da Aula 22, Semana 22 (Infraestrutura como Código com Terraform).</li></ul>
+  </section>
+</section>
+
+  <nav class="navAtiv">
+    <a class="" href="processos-21.html">
+          <span class="rot">← Anterior · Semana 21</span>
+          <span class="tit">Cultura DevOps e feedback contínuo</span>
+        </a>
+    <a class="meio" href="index.html">Todas as atividades</a>
+    <a class="dir" href="processos-23.html">
+          <span class="rot">Próxima · Semana 23 →</span>
+          <span class="tit">Docker Fundamentals</span>
+        </a>
+  </nav>
+
+  <div id="relatorio">
+
+  <div class="folha">
+    <div class="inst" data-fill="escola"></div>
+    <div class="inst">Curso Técnico · Componente curricular do 4º bimestre</div>
+    <div class="meio">
+      <div class="autores" data-fill="integrantes"></div>
+      <div class="tituloTrab">Roteiro de Aula Prática</div>
+      <div class="subtitulo">Processos de Desenvolvimento de Software</div>
+      <div class="subtitulo">Infraestrutura como Código (IaC) com Terraform</div>
+    </div>
+    <div class="fim">
+      <div>São Paulo - SP</div>
+      <div>2026</div>
+    </div>
+  </div>
+
+  <div class="folha">
+    <div class="autores" data-fill="integrantes"></div>
+    <div class="meio">
+      <div class="tituloTrab">Roteiro de Aula Prática</div>
+      <div class="subtitulo">Infraestrutura como Código (IaC) com Terraform</div>
+      <div class="fr-nota">Roteiro de Aula Prática apresentado ao componente curricular Processos de Desenvolvimento de Software, como requisito parcial de avaliação do 4º bimestre.</div>
+      <div class="fr-orient" data-fill="professor"></div>
+      <div class="fr-orient" data-fill="turma"></div>
+      <div class="fr-orient" data-fill="data"></div>
+    </div>
+    <div class="fim">
+      <div>São Paulo - SP</div>
+      <div>2026</div>
+    </div>
+  </div>
+
+  <div id="roteiro">
+    <h2 class="rtitulo">Roteiro de Aula Prática</h2>
+    <div class="rlinha"><b>Nome da disciplina:</b> PROCESSOS DE DESENVOLVIMENTO DE SOFTWARE</div>
+    <div class="rlinha"><b>Unidade:</b> Semana 22 – Infraestrutura como Código (IaC) com Terraform</div>
+    <div class="rlinha"><b>Aula:</b> Registro de Aula – Infraestrutura como Código (IaC) com Terraform</div>
+    <div class="rlinha"><b>Base teórica:</b> Capítulo 22 — Infraestrutura como Código com Terraform (sintaxe HCL, providers, módulos, workspaces, stacks)</div>
+
+    <h3>Objetivos</h3>
+    <ul class="lista-obj"><li>Compreender a sintaxe básica HCL, providers, resources e o fluxo init → plan → apply.</li><li>Identificar, num arquivo Terraform, o provider, o recurso, o nome do recurso e o comando de revisão.</li><li>Refatorar uma infraestrutura duplicada em um módulo reutilizável, com variáveis.</li><li>Usar workspaces da CLI para manter ambientes (dev/prod) separados a partir do mesmo código.</li><li>Entender como módulos de uma stack (rede, compute, ALB, banco) se conectam por dependências e outputs.</li></ul>
+
+    <h3>Procedimento / Atividade</h3>
+    <p><b>Atividade proposta:</b> o grupo aprende Terraform em três etapas: lê um arquivo simples para identificar suas partes, refatora uma infraestrutura duplicada (dev e prod) em módulo reutilizável usando workspaces, e conecta uma stack completa organizada em módulos, decidindo a ordem e as dependências entre eles.</p>
+
+    <h3>Procedimentos para a realização da atividade</h3>
+    <div id="corpoRoteiro"></div>
+
+    <h3>Referências</h3>
+    <ul><li>Apostila da disciplina — Processos de Desenvolvimento de Software, Semana 22 (Capítulo 22).</li><li>SEDUC-SP — Registro da Aula 22, Semana 22 (Infraestrutura como Código com Terraform).</li></ul>
+
+    <h3>Checklist de entrega</h3>
+    <div id="corpoChecklist"></div>
+  </div>
+</div>
+
+</div>
+
+<div class="barra">
+  <span class="status" id="status">salva sozinho neste computador</span>
+  <button class="btn" id="btnLimpar" type="button">Limpar tudo</button>
+  <button class="btn primary" id="btnPDF" type="button">Gerar PDF da resposta</button>
+</div>
+<script>
+(function(){
+  var CHAVE = "processos_s22";
+  var campos = document.querySelectorAll("[data-campo]");
+  var checks = document.querySelectorAll("[data-check]");
+  var status = document.getElementById("status");
+
+  function val(chave){
+    var el = document.querySelector('[data-idk="' + chave + '"]');
+    return el && el.value.trim() ? el.value.trim() : "";
+  }
+  function salvar(){
+    var dados = {};
+    campos.forEach(function(el){ dados[el.dataset.campo] = el.value; });
+    checks.forEach(function(el){ dados["chk_" + el.dataset.check] = el.checked ? "1" : ""; });
+    try{ localStorage.setItem(CHAVE, JSON.stringify(dados)); }catch(e){}
+    if(status){
+      status.textContent = "rascunho salvo";
+      clearTimeout(status._t);
+      status._t = setTimeout(function(){ status.textContent = "salva sozinho neste computador"; }, 1600);
+    }
+  }
+  function carregar(){
+    var bruto = null;
+    try{ bruto = localStorage.getItem(CHAVE); }catch(e){}
+    if(!bruto) return;
+    var dados;
+    try{ dados = JSON.parse(bruto); }catch(e){ return; }
+    campos.forEach(function(el){ if(dados[el.dataset.campo] != null) el.value = dados[el.dataset.campo]; });
+    checks.forEach(function(el){ el.checked = dados["chk_" + el.dataset.check] === "1"; });
+    Array.prototype.forEach.call(document.querySelectorAll("[data-caixa]"), function(caixa){
+      if(typeof sincronizarImagem === "function") sincronizarImagem(caixa);
+    });
+  }
+  function pintarChecks(){
+    var feitos = 0;
+    checks.forEach(function(el){
+      var linha = el.closest(".check");
+      if(el.checked){ linha.classList.add("done"); feitos++; } else { linha.classList.remove("done"); }
+    });
+    var p = document.getElementById("progresso");
+    if(p) p.textContent = feitos + " de " + checks.length + " itens conferidos";
+  }
+
+  campos.forEach(function(el){ el.addEventListener("input", salvar); el.addEventListener("change", salvar); });
+  checks.forEach(function(el){ el.addEventListener("change", function(){ pintarChecks(); salvar(); }); });
+
+  var limpar = document.getElementById("btnLimpar");
+  if(limpar) limpar.addEventListener("click", function(){
+    if(!confirm("Apagar tudo o que foi preenchido nesta página?")) return;
+    campos.forEach(function(el){ el.value = ""; });
+    checks.forEach(function(el){ el.checked = false; });
+    pintarChecks(); salvar();
+  });
+
+  function preencher(sel, texto){
+    document.querySelectorAll(sel).forEach(function(el){ el.textContent = texto; });
+  }
+
+  function montarRelatorio(){
+    // ---- capa e folha de rosto ----
+    var integrantes = val("integrantes") || val("grupo") || "___________________________";
+    preencher("[data-fill=escola]", val("escola") || "ESCOLA");
+    preencher("[data-fill=integrantes]", integrantes);
+    preencher("[data-fill=turma]", val("turma") ? "Turma: " + val("turma") : "");
+    preencher("[data-fill=professor]", val("professor") ? "Professor(a): " + val("professor") : "Professor(a): ___________________________");
+    preencher("[data-fill=data]", val("data") ? "Data de entrega: " + val("data") : "");
+
+    // ---- procedimentos: um item por passo ----
+    var alvo = document.getElementById("corpoRoteiro");
+    if(!alvo) return;
+    alvo.innerHTML = "";
+    var n = 0;
+    document.querySelectorAll(".passo").forEach(function(passo){
+      n++;
+      var item = document.createElement("div");
+      item.className = "item";
+      var perg = document.createElement("div");
+      perg.className = "perg";
+      perg.textContent = n + ". " + passo.querySelector(".passo-txt").textContent.trim();
+      item.appendChild(perg);
+
+      passo.querySelectorAll("[data-rel]").forEach(function(bloco){
+        if(bloco.dataset.rel === "campo"){
+          var el = bloco.querySelector("[data-campo]");
+          if(!el) return;
+          var rotulo = bloco.dataset.rotulo || "";
+          if(rotulo){
+            var r = document.createElement("div");
+            r.className = "rot";
+            r.textContent = rotulo;
+            item.appendChild(r);
+          }
+          var resp = document.createElement("div");
+          resp.className = "resp" + (el.classList.contains("cod") ? " cod" : "");
+          resp.textContent = (el.value || "").trim() || "(não preenchido)";
+          item.appendChild(resp);
+        } else if(bloco.dataset.rel === "imagem"){
+          if(bloco.dataset.rotulo){
+            var ri = document.createElement("div");
+            ri.className = "rot";
+            ri.textContent = bloco.dataset.rotulo;
+            item.appendChild(ri);
+          }
+          var fig = document.createElement("div");
+          fig.className = "figura";
+          var oc = bloco.querySelector("[data-campo]");
+          if(oc && oc.value){
+            var im = document.createElement("img");
+            im.src = oc.value;
+            fig.appendChild(im);
+          } else {
+            var vazia = document.createElement("div");
+            vazia.className = "molduraVazia";
+            vazia.textContent = "Cole aqui o desenho feito no papel";
+            fig.appendChild(vazia);
+          }
+          item.appendChild(fig);
+        } else if(bloco.dataset.rel === "tabela"){
+          if(bloco.dataset.rotulo){
+            var r2 = document.createElement("div");
+            r2.className = "rot";
+            r2.textContent = bloco.dataset.rotulo;
+            item.appendChild(r2);
+          }
+          var t = bloco.querySelector("table").cloneNode(true);
+          t.querySelectorAll("input").forEach(function(inp){
+            var td = inp.parentNode;
+            td.textContent = inp.value || "—";
+          });
+          item.appendChild(t);
+        }
+      });
+      alvo.appendChild(item);
+    });
+
+    // ---- checklist ----
+    var lista = document.getElementById("corpoChecklist");
+    if(lista){
+      lista.innerHTML = "";
+      checks.forEach(function(el){
+        var l = document.createElement("div");
+        l.className = "checkline";
+        l.textContent = (el.checked ? "[ X ]  " : "[    ]  ") + el.parentNode.querySelector("span").textContent;
+        lista.appendChild(l);
+      });
+    }
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll("[data-copiar]"), function (b) {
+    b.addEventListener("click", function () {
+      var pre = document.querySelector('pre[data-arquivo="' + b.getAttribute("data-copiar") + '"]');
+      if (!pre) return;
+      var txt = pre.textContent;
+      var antigo = b.textContent;
+      function ok() { b.textContent = "Copiado!"; setTimeout(function () { b.textContent = antigo; }, 1600); }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(txt).then(ok, function () { b.textContent = "Selecione e copie"; });
+      } else {
+        var t = document.createElement("textarea");
+        t.value = txt; document.body.appendChild(t); t.select();
+        try { document.execCommand("copy"); ok(); } catch (e) { b.textContent = "Selecione e copie"; }
+        document.body.removeChild(t);
+      }
+    });
+  });
+
+  // ---- campos de imagem: anexa, comprime e guarda como data URI ----
+  function sincronizarImagem(caixa){
+    var oculto = caixa.querySelector("[data-campo]");
+    var prev = caixa.querySelector("[data-preview]");
+    var conv = caixa.querySelector("[data-conv]");
+    var rem = caixa.querySelector("[data-remover]");
+    var tem = !!(oculto && oculto.value);
+    if(prev){ prev.hidden = !tem; if(tem) prev.src = oculto.value; else prev.removeAttribute("src"); }
+    if(conv) conv.hidden = tem;
+    if(rem) rem.hidden = !tem;
+    caixa.classList.toggle("temFoto", tem);
+  }
+  Array.prototype.forEach.call(document.querySelectorAll("[data-caixa]"), function(caixa){
+    var entrada = caixa.querySelector("[data-arquivo]");
+    var oculto = caixa.querySelector("[data-campo]");
+    var nome = caixa.querySelector("[data-nome]");
+    var rem = caixa.querySelector("[data-remover]");
+
+    if(entrada) entrada.addEventListener("change", function(){
+      var arq = entrada.files && entrada.files[0];
+      if(!arq) return;
+      var leitor = new FileReader();
+      leitor.onload = function(ev){
+        var img = new Image();
+        img.onload = function(){
+          // reduz para caber no localStorage e no PDF sem pesar
+          var maxL = 1400, esc2 = Math.min(1, maxL / img.width);
+          var cv = document.createElement("canvas");
+          cv.width = Math.round(img.width * esc2);
+          cv.height = Math.round(img.height * esc2);
+          cv.getContext("2d").drawImage(img, 0, 0, cv.width, cv.height);
+          var uri;
+          try{ uri = cv.toDataURL("image/jpeg", 0.75); }catch(err){ uri = ev.target.result; }
+          oculto.value = uri;
+          if(nome) nome.textContent = arq.name;
+          sincronizarImagem(caixa);
+          try{ salvar(); }catch(err){}
+          if(status && uri.length > 3500000){ status.textContent = "imagem muito grande — tente uma foto menor"; }
+        };
+        img.onerror = function(){ if(status) status.textContent = "não consegui ler essa imagem"; };
+        img.src = ev.target.result;
+      };
+      leitor.readAsDataURL(arq);
+      entrada.value = "";
+    });
+
+    if(rem) rem.addEventListener("click", function(){
+      oculto.value = "";
+      if(nome) nome.textContent = "";
+      sincronizarImagem(caixa);
+      try{ salvar(); }catch(err){}
+    });
+  });
+  Array.prototype.forEach.call(document.querySelectorAll("[data-caixa]"), sincronizarImagem);
+
+  var pdf = document.getElementById("btnPDF");
+  if(pdf) pdf.addEventListener("click", function(){ montarRelatorio(); window.print(); });
+  window.addEventListener("beforeprint", montarRelatorio);
+
+  carregar(); pintarChecks();
+})();
+</script>
+
+<script>
+(function(){
+  var tabs=[].slice.call(document.querySelectorAll('.tabs button'));
+  function show(name){
+    if(!document.getElementById(name)) name='como';
+    tabs.forEach(function(t){ t.setAttribute('aria-selected', String(t.dataset.tab===name)); });
+    document.querySelectorAll('section.tab').forEach(function(s){ s.hidden = s.id!==name; });
+    window.scrollTo(0,0);
+  }
+  tabs.forEach(function(t){ t.addEventListener('click', function(){ show(t.dataset.tab); }); });
+  show('como');
+})();
+</script>
+</body>
+</html>
